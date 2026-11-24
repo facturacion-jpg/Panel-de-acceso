@@ -1,0 +1,14 @@
+node_modules/
+npm-debug.log
+*.log
+data/exports/
+data/backups/
+data/store.anterior.json
+data/store.json
+data/catalog.anterior.json
+data/store.corrupt-*.json
+data/*.pre-restore
+
+.env
+.env.local
+.env.*.local

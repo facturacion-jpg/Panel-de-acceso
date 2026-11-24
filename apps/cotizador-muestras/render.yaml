@@ -1,0 +1,43 @@
+# Blueprint para Render (plan gratuito). Crear el servicio desde este archivo
+# (New > Blueprint). Sin disco persistente: el sistema de archivos es efímero y
+# los datos se pierden al reiniciar/redesplegar (persistencia JSON solo mientras
+# la instancia esté activa).
+previews:
+  generation: off
+
+services:
+  - type: web
+    name: cotizador-muestras
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm ci
+    startCommand: node src/server.js
+    healthCheckPath: /api/health
+
+    # Render asigna PORT automáticamente. La app escucha en 0.0.0.0 y usa ese puerto.
+    envVars:
+      # Se usa "development" para que la página abra sin autenticación básica.
+      # Las acciones de escritura siguen protegidas por ADMIN_TOKEN.
+      - key: NODE_ENV
+        value: development
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATA_DIR
+        value: /opt/render/project/src/data
+      # Detrás del proxy de Render, los límites por IP usan X-Forwarded-For.
+      - key: TRUST_PROXY
+        value: "1"
+      # Umbral bajo para evitar 503 en /api/health por poco espacio en FS efímero.
+      - key: MIN_FREE_BYTES
+        value: "20971520"
+      # URL pública sin barra final; la usan los enlaces al Excel del correo.
+      - key: PUBLIC_BASE_URL
+        value: https://cotizador-static.onrender.com
+      # Sin BASIC_AUTH_USER/BASIC_AUTH_PASS: la página abre sin usuario/contraseña.
+      # Clave para importar, limpiar, restaurar, borrar cotizaciones y acciones admin.
+      - key: ADMIN_TOKEN
+        sync: false
+      # Orígenes CORS permitidos, separados por coma. Vacío = desactivado. "*" prohibido en producción.
+      - key: CORS_ORIGIN
+        sync: false

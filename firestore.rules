@@ -1,0 +1,96 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAccessAdmin() {
+      return signedIn()
+        && request.auth.token.email == 'grupocontable2130@gmail.com';
+    }
+
+    function hasAppAccess(appId) {
+      return signedIn()
+        && exists(/databases/$(database)/documents/app_access/$(request.auth.token.email))
+        && get(/databases/$(database)/documents/app_access/$(request.auth.token.email)).data.access[appId] == true;
+    }
+
+    function canSeeSharedHistory() {
+      return signedIn()
+        && request.auth.token.email in [
+          'grupocontable2130@gmail.com',
+          'analista.calidad@crearte-sas.com'
+        ];
+    }
+
+    // El administrador puede gestionar la lista completa. Cada usuario puede
+    // consultar únicamente su propio documento para validar el acceso al módulo.
+    match /app_access/{email} {
+      allow get: if isAccessAdmin()
+        || (signedIn() && request.auth.token.email == email);
+      allow list: if isAccessAdmin();
+      allow create, update: if isAccessAdmin()
+        && request.resource.data.email == email;
+      allow delete: if isAccessAdmin();
+    }
+
+    // Datos compartidos de Estado de tallas e Inspección de telas.
+    // Cada usuario consulta y modifica sus propios registros; el administrador
+    // puede listar todos los registros desde el panel administrativo.
+    // Cada cuenta nueva puede enviar su propio aviso de registro una sola vez.
+    // Solo el administrador puede verlos y marcarlos como revisados.
+    match /registration_requests/{uid} {
+      allow create: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['uid', 'name', 'email', 'status', 'createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.name is string
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.status == 'pending'
+        && request.resource.data.createdAt == request.time;
+      allow get, list: if isAccessAdmin();
+      allow update: if isAccessAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'reviewedAt'])
+        && request.resource.data.status == 'reviewed'
+        && request.resource.data.reviewedAt == request.time;
+      allow delete: if isAccessAdmin();
+    }
+
+    match /app_records/{recordId} {
+      allow get, list: if isAccessAdmin()
+        || (signedIn()
+          && resource.data.ownerUid == request.auth.uid
+          && hasAppAccess(resource.data.appId));
+      allow create: if isAccessAdmin()
+        || (signedIn()
+          && request.resource.data.ownerUid == request.auth.uid
+          && request.resource.data.ownerEmail == request.auth.token.email
+          && request.resource.data.appId in ['tallas', 'telas']
+          && hasAppAccess(request.resource.data.appId)
+          && request.resource.data.recordType in ['set', 'plan', 'inspection']);
+      allow update: if isAccessAdmin()
+        || (signedIn()
+          && resource.data.ownerUid == request.auth.uid
+          && hasAppAccess(resource.data.appId)
+          && request.resource.data.ownerUid == request.auth.uid
+          && request.resource.data.ownerEmail == request.auth.token.email
+          && request.resource.data.appId == resource.data.appId
+          && request.resource.data.recordType == resource.data.recordType);
+      allow delete: if isAccessAdmin()
+        || (signedIn()
+          && resource.data.ownerUid == request.auth.uid
+          && hasAppAccess(resource.data.appId));
+    }
+
+    match /auditorias/{auditoriaId} {
+      allow read: if canSeeSharedHistory()
+        || (signedIn() && resource.data.auditor == request.auth.token.email);
+      allow create: if signedIn()
+        && request.resource.data.auditor == request.auth.token.email;
+      allow delete: if canSeeSharedHistory()
+        || (signedIn() && resource.data.auditor == request.auth.token.email);
+      allow update: if false;
+    }
+  }
+}
