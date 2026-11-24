@@ -2,8 +2,18 @@ services:
   - type: web
     runtime: static
     name: panel-accesos
+    plan: free
     buildCommand: npm install && npm --prefix apps/crearte ci && npm --prefix apps/tallas ci && npm --prefix apps/telas ci && npm run build
     staticPublishPath: ./dist
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: VITE_EMAILJS_SERVICE_ID
+        value: service_bd757ws
+      - key: VITE_EMAILJS_TEMPLATE_ID
+        value: template_qkdmp94
+      - key: VITE_EMAILJS_PUBLIC_KEY
+        value: CTcGehX8rVCk1JDt6
     routes:
       - type: rewrite
         source: /crearte
@@ -18,10 +28,16 @@ services:
         source: /tallas/
         destination: /tallas/index.html
       - type: rewrite
+        source: /tallas/*
+        destination: /tallas/index.html
+      - type: rewrite
         source: /telas
         destination: /telas/index.html
       - type: rewrite
         source: /telas/
+        destination: /telas/index.html
+      - type: rewrite
+        source: /telas/*
         destination: /telas/index.html
       - type: rewrite
         source: /*

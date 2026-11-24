@@ -13,7 +13,9 @@ Para publicar en Render, usa un único **Static Site** para este proyecto. El ar
 - Rewrite route: `/crearte` → `/crearte/index.html`
 - Rewrite route: `/crearte/*` → `/crearte/index.html`
 - Rewrite route: `/tallas` → `/tallas/index.html`
+- Rewrite route: `/tallas/*` → `/tallas/index.html`
 - Rewrite route: `/telas` → `/telas/index.html`
+- Rewrite route: `/telas/*` → `/telas/index.html`
 - Rewrite route: `/*` → `/index.html`
 
 Pon las rutas de `/crearte`, `/tallas` y `/telas` antes de la regla general `/*`. El build genera el portal en `dist/`, Crearte en `dist/crearte/`, Tallas en `dist/tallas/` y Telas en `dist/telas/`.
