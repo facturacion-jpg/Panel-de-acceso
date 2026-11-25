@@ -1,5 +1,6 @@
 /* Panel "Decisión final de la tela" */
 .final-decision-panel {
+  margin-top: 18px;
   margin-bottom: 18px;
   padding: 22px;
 }
