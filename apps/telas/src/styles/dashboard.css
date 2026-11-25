@@ -972,60 +972,74 @@
 }
 
 .metric-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 2px;
   background: #f8f6f0;
   border: 1px solid #e8ede8;
   border-radius: 14px;
-  padding: 17px 16px;
-  min-height: 119px;
+  padding: 16px;
+  min-height: 92px;
   box-shadow: 0 5px 20px #314b3908;
 }
 
 .metric-icon {
+  grid-column: 1;
+  grid-row: 1;
   height: 30px;
   width: 30px;
   border-radius: 9px;
   display: grid;
   place-items: center;
-  margin-bottom: 10px;
 }
 
 .metric-icon.sage {
-  background: #fff4bf;
-  color: #171717;
+  background: #eaf2ec;
+  color: #3d7a5a;
 }
 
 .metric-icon.green {
-  background: #fff4bf;
-  color: #171717;
+  background: #e4f3e8;
+  color: #1f8a4c;
 }
 
 .metric-icon.rose {
-  background: #f8eeeb;
-  color: #bd7667;
+  background: #fdeceb;
+  color: #c4473a;
 }
 
 .metric-icon.gold {
-  background: #f7f2e8;
-  color: #b18b4c;
+  background: #fff4bf;
+  color: #8a6d00;
 }
 
 .metric-card > span {
-  display: block;
-  font-size: 13px;
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  font-size: 12px;
   color: #536258;
   font-weight: 700;
 }
 
 .metric-card strong {
-  display: block;
-  font: 800 25px Manrope;
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  font: 800 24px Manrope;
   color: #2c4035;
-  margin: 3px 0;
 }
 
 .metric-card small {
+  grid-column: 2 / -1;
+  grid-row: 2;
+  justify-self: end;
   font-size: 10px;
   color: #5e6b62;
+  text-align: right;
 }
 
 .section-heading {
@@ -1560,6 +1574,19 @@ footer span {
 
   .brand .brand-byline {
     font-size: 8px;
+  }
+
+  .metric-card {
+    padding: 12px;
+    column-gap: 6px;
+  }
+
+  .metric-card > span {
+    font-size: 11px;
+  }
+
+  .metric-card strong {
+    font-size: 20px;
   }
 
   .header-center {
