@@ -20,6 +20,12 @@ Para publicar en Render, usa un único **Static Site** para este proyecto. El ar
 
 Pon las rutas de `/auditorias`, `/tallas` y `/telas` antes de la regla general `/*`. El build genera el portal en `dist/`, Auditorías en `dist/auditorias/`, Tallas en `dist/tallas/` y Telas en `dist/telas/`.
 
+### Si Render sigue compilando con `apps/crearte`
+
+Cuando el servicio se creó manualmente, o el Blueprint no se ha sincronizado, Render conserva el Build Command antiguo aunque `render.yaml` ya esté actualizado. El log mostrará `npm --prefix apps/crearte ci` y terminará con `npm error code EUSAGE`, porque esa carpeta ya no existe.
+
+En ese caso, en el servicio de Render entra a **Settings → Build & Deploy**, pega el Build Command indicado arriba, revisa **Redirects/Rewrites** y ejecuta **Manual Deploy → Deploy latest commit**. Si el servicio fue creado desde el Blueprint, usa **Sync** para tomar el `render.yaml` actual. Los avisos de `we don't have access to your repo` y de vulnerabilidades de `npm audit` son informativos; no causan este fallo.
+
 En Firebase Authentication, habilita **Correo/contraseña** y autoriza el dominio del portal. Los tres módulos usan el mismo proyecto Firebase y origen web.
 
 ## Firebase y permisos
