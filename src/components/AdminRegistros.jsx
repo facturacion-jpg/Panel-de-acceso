@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
-import { APPS } from '../config/apps';
+import { COTIZADOR_SUPABASE } from '../config/cotizadorSupabase';
 
 const MODULOS = [
   { id: 'crearte', nombre: 'Crearte · Auditorías' },
@@ -47,21 +47,30 @@ export default function AdminRegistros() {
     setCargando(true);
     setError('');
     if (appId === 'cotizador_muestras') {
-      const cotizador = APPS.find((app) => app.id === appId);
-      fetch(`${cotizador.url.replace(/\/$/, '')}/api/quotes`, { cache: 'no-store' })
+      const { url, anonKey, stateKey } = COTIZADOR_SUPABASE;
+      const base = String(url || '').replace(/\/+$/, '');
+      const consulta = `${base}/rest/v1/cotizador_state?select=value,updated_at&key=eq.${encodeURIComponent(stateKey)}&limit=1`;
+      fetch(consulta, {
+        cache: 'no-store',
+        headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}`, Accept: 'application/json' },
+      })
         .then(async (response) => {
-          if (!response.ok) throw new Error(`El cotizador respondió ${response.status}.`);
-          const data = await response.json();
-          if (!Array.isArray(data)) throw new Error('El cotizador devolvió un formato de registros inesperado.');
+          if (!response.ok) throw new Error(`Supabase respondió ${response.status}.`);
+          const rows = await response.json();
+          if (!Array.isArray(rows)) throw new Error('Supabase devolvió un formato de registros inesperado.');
+          const quotes = rows[0]?.value?.quotes;
+          if (!Array.isArray(quotes)) throw new Error('El estado compartido no contiene cotizaciones.');
+          const ordenadas = [...quotes].sort((a, b) =>
+            (Date.parse(b.createdAt || '') || 0) - (Date.parse(a.createdAt || '') || 0));
           if (vigente) {
-            setRegistros(data);
+            setRegistros(ordenadas);
             setCargando(false);
           }
         })
         .catch((cause) => {
           console.error('No se pudieron cargar las cotizaciones:', cause);
           if (vigente) {
-            setError('No se pudieron cargar las cotizaciones. Verifica que el servicio esté disponible y que CORS_ORIGIN permita el dominio del panel.');
+            setError('No se pudieron cargar las cotizaciones. Verifica la conexión con Supabase y las políticas de la tabla cotizador_state.');
             setCargando(false);
           }
         });
