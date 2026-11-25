@@ -57,7 +57,7 @@ export default function AuthGate({ children }) {
   }
 
   if (estado === 'permitido') {
-    return <><div style={estilos.sesion}>{usuario?.email}</div>{children}</>;
+    return children;
   }
 
   return <main style={estilos.fondo}><section style={estilos.tarjeta}>
@@ -71,5 +71,4 @@ const estilos = {
   fondo: { minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 24, background: '#f1f4f6', color: '#14202b', fontFamily: 'system-ui, sans-serif' },
   tarjeta: { width: 'min(100%, 420px)', display: 'grid', gap: 10, padding: 28, borderRadius: 18, background: '#fff', border: '1px solid #d5dce3', boxShadow: '0 16px 45px #14202b12' },
   enlace: { color: '#17324d', textAlign: 'center', fontSize: 14 },
-  sesion: { display: 'flex', justifyContent: 'flex-end', padding: 8, color: '#5d6b78', font: '13px system-ui' },
 };
