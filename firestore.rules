@@ -92,5 +92,19 @@ service cloud.firestore {
         || (signedIn() && resource.data.auditor == request.auth.token.email);
       allow update: if false;
     }
+
+    // Acompañamientos previos: observaciones capturadas antes de la auditoría final.
+    match /acompanamientos/{acompanamientoId} {
+      allow read: if canSeeSharedHistory()
+        || (signedIn() && resource.data.auditor == request.auth.token.email);
+      allow create: if signedIn()
+        && request.resource.data.auditor == request.auth.token.email;
+      allow update: if canSeeSharedHistory()
+        || (signedIn()
+          && resource.data.auditor == request.auth.token.email
+          && request.resource.data.auditor == request.auth.token.email);
+      allow delete: if canSeeSharedHistory()
+        || (signedIn() && resource.data.auditor == request.auth.token.email);
+    }
   }
 }

@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { guardarEnFirestore, cargarDeFirestore, eliminarDeFirestore, esAdmin } from './db.js';
+import { guardarEnFirestore, cargarDeFirestore, eliminarDeFirestore, esAdmin, cargarAcompanamientos } from './db.js';
 import { ADMIN_EMAIL, auth, db } from './firebase.js';
+import Acompanamiento from './Acompanamiento.jsx';
 
 // Identificadores de la plantilla de usada para enviar el resumen de auditoría.
 const EMAILJS_SERVICE_ID  = 'service_31xahnu';
@@ -74,12 +75,30 @@ const normAql = (val) => {
 };
 
 const STORAGE_KEY = (email) => `auditorias_textil_local_db:${String(email || '').trim().toLowerCase()}`;
+const STORAGE_KEY_ACOMPANAMIENTOS = (email) => `auditorias_acompanamientos_local_db:${String(email || '').trim().toLowerCase()}`;
+
+// Claves de las observaciones del acompañamiento previo; se reutilizan al traerlas a la auditoría final.
+const CAMPOS_ACOMPANAMIENTO = [
+  { key: 'apariencia', label: 'Apariencia' },
+  { key: 'medidas', label: 'Medidas' },
+  { key: 'empaque', label: 'Empaque' },
+  { key: 'insumos', label: 'Insumos' },
+  { key: 'segundas', label: 'Segundas' },
+];
+
+// Normaliza referencia y lote para que mayúsculas o espacios no impidan encontrar el acompañamiento.
+const normClave = (valor) => String(valor ?? '').trim().toUpperCase().replace(/\s+/g, ' ');
 
 // Reúne el formulario de auditoría, su historial y las acciones para consultar y exportar registros.
 function Auditoria({ usuario, tema, setTema }) {
   // Estado del historial y de los paneles/avisos de la interfaz.
   const [historialAuditorias, setHistorialAuditorias] = useState([]);
   const claveHistorialLocal = STORAGE_KEY(usuario.email);
+  // Acompañamientos previos y vista activa dentro del módulo de Auditorías.
+  const [acompanamientos, setAcompanamientosState] = useState([]);
+  const claveAcompanamientosLocal = STORAGE_KEY_ACOMPANAMIENTOS(usuario.email);
+  const [vista, setVista] = useState('auditoria');
+  const [verificacionAcompanamiento, setVerificacionAcompanamiento] = useState({});
   // Mantiene el registro elegido para consultar separado de los datos editables del formulario.
   const [isHistorialOpen, setIsHistorialOpen] = useState(false);
   const [registroVisualizar, setRegistroVisualizar] = useState(null);
@@ -126,6 +145,12 @@ function Auditoria({ usuario, tema, setTema }) {
     setTimeout(() => setToastMessage(""), 4000);
   };
 
+  // Conserva los acompañamientos en la caché local cada vez que cambian.
+  const setAcompanamientos = (lista) => {
+    setAcompanamientosState(lista);
+    try { localStorage.setItem(claveAcompanamientosLocal, JSON.stringify(lista)); } catch (_) {}
+  };
+
   useEffect(() => {
     // Muestra primero la copia local para que el historial aparezca sin esperar a la red.
     try {
@@ -140,12 +165,24 @@ function Auditoria({ usuario, tema, setTema }) {
       console.error('No fue posible sincronizar el historial con Firestore:', error);
       triggerToast(`No se pudo cargar el historial en la nube (${error?.code || 'error'}). Revisa la conexión y las reglas de Firestore.`);
     });
+
+    // Los acompañamientos se cargan aparte para no alterar el historial AQL existente.
+    try {
+      const guardados = localStorage.getItem(claveAcompanamientosLocal);
+      if (guardados) setAcompanamientosState(JSON.parse(guardados));
+    } catch (e) { console.error(e); }
+    cargarAcompanamientos(usuario.email).then(lista => {
+      setAcompanamientos(lista);
+    }).catch(error => {
+      console.error('No fue posible sincronizar los acompañamientos con Firestore:', error);
+    });
   }, []);
 
   // Restablece lote y hallazgos sin modificar el historial de auditorías guardadas.
   const limpiarFormulario = () => {
     setFormData(initialFormData);
     setAuditResults(initialAuditResults);
+    setVerificacionAcompanamiento({});
     setEmailDestinatarios([]);
     setMensajeAdicional("");
     triggerToast("Formulario reiniciado en ceros");
@@ -261,10 +298,26 @@ function Auditoria({ usuario, tema, setTema }) {
     return ((totalSegundas / lote) * 100).toFixed(2) + '%';
   }, [totalSegundas, formData.tamañoLote]);
 
+  // Busca el acompañamiento previo que coincide con la referencia y el lote escritos.
+  const acompanamientoActual = useMemo(() => {
+    const referencia = normClave(formData.referencia);
+    const lote = normClave(formData.loteNum);
+    if (!referencia || !lote) return null;
+
+    const coincidencias = acompanamientos.filter(item =>
+      normClave(item.referencia) === referencia && normClave(item.loteNum) === lote);
+    if (!coincidencias.length) return null;
+
+    return coincidencias.sort((a, b) =>
+      (Number(b.id) || 0) - (Number(a.id) || 0)
+      || String(b.fecha || '').localeCompare(String(a.fecha || '')))[0];
+  }, [acompanamientos, formData.referencia, formData.loteNum]);
+
   // Mantiene sincronizado el formulario mediante el atributo name de cada campo.
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (name === 'referencia' || name === 'loteNum') setVerificacionAcompanamiento({});
   };
 
   // Actualiza un hallazgo anidado y evita guardar cantidades negativas o valores no numéricos.
@@ -354,6 +407,20 @@ function Auditoria({ usuario, tema, setTema }) {
       },
       decision: decisionFinal,
       comentarios: auditResults.comentarios,
+      // Si referencia + lote coinciden con un acompañamiento, se conserva junto con
+      // la verificación Sí/No que hizo la auditora sobre cada observación.
+      ...(acompanamientoActual ? {
+        acompanamientoPrevio: {
+          id: acompanamientoActual.id,
+          _firestoreId: acompanamientoActual._firestoreId || '',
+          fecha: acompanamientoActual.fecha || '',
+          referencia: acompanamientoActual.referencia || '',
+          loteNum: acompanamientoActual.loteNum || '',
+          observaciones: Object.fromEntries(CAMPOS_ACOMPANAMIENTO.map(campo =>
+            [campo.key, acompanamientoActual[campo.key] || ''])),
+          verificacion: { ...verificacionAcompanamiento }
+        }
+      } : {}),
       fotos: auditResults.fotos,
       correo: correoInfo || { enviado: false, destinatario: 'Sin envío' },
       fecha: new Date().toLocaleDateString('es-CO', {
@@ -611,6 +678,7 @@ function Auditoria({ usuario, tema, setTema }) {
       comentarios: item.comentarios || '',
       fotos: item.fotos || []
     });
+    setVerificacionAcompanamiento(item.acompanamientoPrevio?.verificacion || {});
     setIsHistorialOpen(false);
     triggerToast("Auditoría Lote #" + (item.loteNum || 'S/N') + " cargada en formulario");
   };
@@ -831,39 +899,68 @@ function Auditoria({ usuario, tema, setTema }) {
           </div>
           <div className="hidden sm:block w-px h-8 bg-slate-200"></div>
           <p className="hidden sm:block text-[11px] text-slate-500 font-medium truncate">
-            Auditoría Final Confección · Muestreo AQL
+            {vista === 'acompanamiento'
+              ? 'Acompañamiento previo · Observaciones antes de la auditoría final'
+              : 'Auditoría Final Confección · Muestreo AQL'}
           </p>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
           {/* Botones de escritorio (en móvil van en la barra inferior) */}
           <div className="hidden sm:flex items-center gap-2.5">
-            <button
-              type="button"
-              onClick={() => setIsHistorialOpen(true)}
-              className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all border border-slate-300 cursor-pointer shadow-sm"
-            >
-              <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7zm0 5h16M9 4v16"/></svg>
-              <span>Base de Datos ({historialAuditorias.length})</span>
-            </button>
+            {vista === 'auditoria' ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsDrawerOpen(false);
+                    setIsHistorialOpen(false);
+                    setIsEmailModalOpen(false);
+                    setVista('acompanamiento');
+                  }}
+                  className="flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-sm"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                  <span>Acompañamiento</span>
+                </button>
 
-            <button
-              type="button"
-              onClick={() => guardarAuditoria()}
-              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm cursor-pointer shadow-emerald-200"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
-              <span>Guardar en BD</span>
-            </button>
+                <button
+                  type="button"
+                  onClick={() => setIsHistorialOpen(true)}
+                  className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all border border-slate-300 cursor-pointer shadow-sm"
+                >
+                  <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7zm0 5h16M9 4v16"/></svg>
+                  <span>Base de Datos ({historialAuditorias.length})</span>
+                </button>
 
-            <button
-              type="button"
-              onClick={() => setIsEmailModalOpen(true)}
-              className="flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-slate-900 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm cursor-pointer"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-              <span>Enviar Correo</span>
-            </button>
+                <button
+                  type="button"
+                  onClick={() => guardarAuditoria()}
+                  className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm cursor-pointer shadow-emerald-200"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                  <span>Guardar en BD</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setIsEmailModalOpen(true)}
+                  className="flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-slate-900 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm cursor-pointer"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                  <span>Enviar Correo</span>
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setVista('auditoria')}
+                className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all border border-slate-300 cursor-pointer shadow-sm"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 16l-4-4 4-4M6 12h9"/></svg>
+                <span>Volver a auditoría</span>
+              </button>
+            )}
           </div>
 
           {/* Alterna entre modo claro y oscuro; la preferencia se guarda en este navegador. */}
@@ -897,7 +994,16 @@ function Auditoria({ usuario, tema, setTema }) {
         </div>
       </header>
 
-      {/* Formulario principal: identificación del lote, muestreo calculado y resultados. */}
+      {/* Las dos pantallas del módulo comparten encabezado, tema y sesión. */}
+      {vista === 'acompanamiento' ? (
+        <Acompanamiento
+          usuario={usuario}
+          registros={acompanamientos}
+          setRegistros={setAcompanamientos}
+          onVolver={() => setVista('auditoria')}
+          triggerToast={triggerToast}
+        />
+      ) : (
       <main className="flex-1 max-w-6xl w-full mx-auto p-3 sm:p-6 lg:p-8 pb-28 sm:pb-8 space-y-4 sm:space-y-6">
         <div className="flex justify-between items-center text-xs text-slate-500">
           <span>Fecha de auditoría: <strong>{new Date().toLocaleDateString('es-CO')}</strong></span>
@@ -1076,6 +1182,65 @@ function Auditoria({ usuario, tema, setTema }) {
           </div>
         </section>
 
+        {/* Acompañamiento previo: se vincula automáticamente cuando coinciden referencia y lote. */}
+        <section className="bg-white text-slate-800 rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <div className="bg-slate-50/80 px-4 sm:px-6 py-3.5 border-b border-slate-200 flex flex-wrap justify-between items-center gap-2">
+            <h2 className="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+              Acompañamiento previo
+            </h2>
+            <span className="text-xs bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1 rounded-full font-semibold">
+              {acompanamientoActual ? `Registro del ${acompanamientoActual.fecha || 'sin fecha'}` : 'Sin registro vinculado'}
+            </span>
+          </div>
+          <div className="p-4 sm:p-6">
+            {!formData.referencia || !formData.loteNum ? (
+              <p className="text-xs text-slate-500">
+                Diligencia la referencia y el lote para traer el acompañamiento registrado.
+              </p>
+            ) : !acompanamientoActual ? (
+              <p className="text-xs text-slate-500">
+                No hay un acompañamiento guardado para esta referencia y lote.
+              </p>
+            ) : (
+              <div className="space-y-3">
+                <div className="flex flex-wrap gap-2 text-xs">
+                  <span className="bg-slate-100 text-slate-700 px-2 py-1 rounded font-semibold">
+                    Ref: {acompanamientoActual.referencia}
+                  </span>
+                  <span className="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-1 rounded font-bold">
+                    Lote: {acompanamientoActual.loteNum}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                  {CAMPOS_ACOMPANAMIENTO.map((campo) => (
+                    <div key={campo.key} className="border border-slate-200 rounded-xl p-3 space-y-2">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="text-xs font-bold text-slate-600 uppercase">{campo.label}</p>
+                          <p className="text-sm text-slate-800 whitespace-pre-wrap break-words">
+                            {acompanamientoActual[campo.key] || 'Sin observación'}
+                          </p>
+                        </div>
+                        <select
+                          aria-label={`¿Se realizó ${campo.label}?`}
+                          value={verificacionAcompanamiento[campo.key] || ''}
+                          onChange={(e) => setVerificacionAcompanamiento(prev => ({ ...prev, [campo.key]: e.target.value }))}
+                          className="bg-white border border-slate-300 text-slate-900 text-xs rounded-lg p-2 outline-none shrink-0"
+                        >
+                          <option value="">¿Se realizó?</option>
+                          <option value="si">Sí</option>
+                          <option value="no">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+
         {/* Valores derivados de TABLA_I y AQL_PLANS; se actualizan con los parámetros del lote. */}
         {/* La card sigue el tema: clara en modo claro y oscura en modo oscuro. */}
         <section className="bg-white text-slate-800 rounded-2xl shadow-sm overflow-hidden border border-slate-200">
@@ -1194,24 +1359,47 @@ function Auditoria({ usuario, tema, setTema }) {
         </section>
 
       </main>
+      )}
 
       {/* En móvil repite las acciones principales que no caben en el encabezado de escritorio. */}
       <nav
-        className="sm:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-slate-200 grid grid-cols-3 shadow-[0_-4px_12px_rgba(15,23,42,0.06)]"
+        className={`sm:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-slate-200 grid shadow-[0_-4px_12px_rgba(15,23,42,0.06)] ${vista === 'acompanamiento' ? 'grid-cols-1' : 'grid-cols-4'}`}
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
       >
-        <button type="button" onClick={() => setIsHistorialOpen(true)} className="flex flex-col items-center gap-1 py-2.5 text-slate-600 cursor-pointer">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7zm0 5h16M9 4v16"/></svg>
-          <span className="text-[11px] font-semibold">Registros ({historialAuditorias.length})</span>
-        </button>
-        <button type="button" onClick={() => guardarAuditoria()} className="flex flex-col items-center gap-1 py-2.5 text-emerald-700 cursor-pointer">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
-          <span className="text-[11px] font-semibold">Guardar</span>
-        </button>
-        <button type="button" onClick={() => setIsEmailModalOpen(true)} className="flex flex-col items-center gap-1 py-2.5 text-indigo-700 cursor-pointer">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          <span className="text-[11px] font-semibold">Correo</span>
-        </button>
+        {vista === 'acompanamiento' ? (
+          <button type="button" onClick={() => setVista('auditoria')} className="flex flex-col items-center gap-1 py-2.5 text-indigo-700 cursor-pointer">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 16l-4-4 4-4M6 12h9"/></svg>
+            <span className="text-[11px] font-semibold">Volver a auditoría</span>
+          </button>
+        ) : (
+          <>
+            <button
+              type="button"
+              onClick={() => {
+                setIsDrawerOpen(false);
+                setIsHistorialOpen(false);
+                setIsEmailModalOpen(false);
+                setVista('acompanamiento');
+              }}
+              className="flex flex-col items-center gap-1 py-2.5 text-indigo-700 cursor-pointer"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+              <span className="text-[11px] font-semibold">Acompañamiento</span>
+            </button>
+            <button type="button" onClick={() => setIsHistorialOpen(true)} className="flex flex-col items-center gap-1 py-2.5 text-slate-600 cursor-pointer">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7zm0 5h16M9 4v16"/></svg>
+              <span className="text-[11px] font-semibold">Registros ({historialAuditorias.length})</span>
+            </button>
+            <button type="button" onClick={() => guardarAuditoria()} className="flex flex-col items-center gap-1 py-2.5 text-emerald-700 cursor-pointer">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+              <span className="text-[11px] font-semibold">Guardar</span>
+            </button>
+            <button type="button" onClick={() => setIsEmailModalOpen(true)} className="flex flex-col items-center gap-1 py-2.5 text-indigo-700 cursor-pointer">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <span className="text-[11px] font-semibold">Correo</span>
+            </button>
+          </>
+        )}
       </nav>
 
       {/* El panel lateral permite editar defectos, segundas, comentarios y fotos de evidencia. */}

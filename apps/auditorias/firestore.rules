@@ -73,5 +73,19 @@ service cloud.firestore {
         || (hasAppAccess('crearte') && resource.data.auditor == request.auth.token.email);
       allow update: if false;
     }
+
+    // Acompañamientos previos: observaciones capturadas antes de la auditoría final.
+    match /acompanamientos/{acompanamientoId} {
+      allow read: if canSeeSharedHistory()
+        || (hasAppAccess('crearte') && resource.data.auditor == request.auth.token.email);
+      allow create: if (isAccessAdmin() || hasAppAccess('crearte'))
+        && request.resource.data.auditor == request.auth.token.email;
+      allow update: if canSeeSharedHistory()
+        || (hasAppAccess('crearte')
+          && resource.data.auditor == request.auth.token.email
+          && request.resource.data.auditor == request.auth.token.email);
+      allow delete: if canSeeSharedHistory()
+        || (hasAppAccess('crearte') && resource.data.auditor == request.auth.token.email);
+    }
   }
 }
