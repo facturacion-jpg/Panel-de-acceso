@@ -904,9 +904,10 @@ function Auditoria({ usuario, tema, setTema }) {
           <button 
             type="button"
             onClick={limpiarFormulario}
-            className="text-indigo-600 hover:text-indigo-800 font-semibold underline cursor-pointer"
+            className="inline-flex items-center gap-1 text-indigo-600 hover:text-indigo-800 font-semibold underline cursor-pointer"
           >
-            + Nueva Auditoría en Blanco
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 16.5 13.5 6a2 2 0 0 1 2.8 0l3.7 3.7a2 2 0 0 1 0 2.8L11 19H5l-2-2.5a1 1 0 0 1 0-1z"/><path strokeLinecap="round" strokeWidth="2" d="M9 19h12"/></svg>
+            Limpiar campos
           </button>
         </div>
 
