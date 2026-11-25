@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Bell, CircleHelp, X } from "lucide-react";
 
 export default function Header({
+  userEmail = "",
   onHelp,
   notifications = [],
   onOpenRolls,
@@ -98,7 +99,10 @@ export default function Header({
               </section>
             )}
           </div>
-          <div className="avatar">QA</div>
+          <div className="user-menu">
+            {userEmail && <span className="user-email" title={userEmail}>{userEmail}</span>}
+            <div className="avatar" title={userEmail || undefined} aria-label={userEmail ? `Usuario: ${userEmail}` : "Usuario"}>QA</div>
+          </div>
         </div>
 
       </header>

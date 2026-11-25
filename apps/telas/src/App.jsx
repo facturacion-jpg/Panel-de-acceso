@@ -638,6 +638,7 @@ export default function App() {
     <div className="app-shell">
 
       <Header
+        userEmail={user?.email}
         onHelp={() => setHelpOpen(true)}
         notifications={notifications}
         onOpenRolls={() => setPlanillaOpen(true)}
