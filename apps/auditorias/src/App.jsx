@@ -951,16 +951,7 @@ function Auditoria({ usuario, tema, setTema }) {
                   <span>Enviar Correo</span>
                 </button>
               </>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setVista('auditoria')}
-                className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all border border-slate-300 cursor-pointer shadow-sm"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 16l-4-4 4-4M6 12h9"/></svg>
-                <span>Volver a auditoría</span>
-              </button>
-            )}
+            ) : null}
           </div>
 
           {/* Alterna entre modo claro y oscuro; la preferencia se guarda en este navegador. */}
@@ -979,18 +970,34 @@ function Auditoria({ usuario, tema, setTema }) {
             )}
           </button>
 
-          {/* Botón de retorno al estilo de Tallas: solo icono y tooltip al pasar el cursor. */}
-          <a
-            href="/?retornoAplicativo=1"
-            data-tip="Volver al panel"
-            aria-label="Volver al panel"
-            className="inline-grid place-items-center w-10 h-10 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M10 16l-4-4 4-4M6 12h9" />
-            </svg>
-          </a>
+          {/* Botón de retorno al estilo de Tallas: solo icono y tooltip al pasar el cursor.
+              En Acompañamiento regresa a la auditoría; en la auditoría vuelve al panel. */}
+          {vista === 'acompanamiento' ? (
+            <button
+              type="button"
+              onClick={() => setVista('auditoria')}
+              data-tip="Volver a auditoría"
+              aria-label="Volver a auditoría"
+              className="inline-grid place-items-center w-10 h-10 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M10 16l-4-4 4-4M6 12h9" />
+              </svg>
+            </button>
+          ) : (
+            <a
+              href="/?retornoAplicativo=1"
+              data-tip="Volver al panel"
+              aria-label="Volver al panel"
+              className="inline-grid place-items-center w-10 h-10 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M10 16l-4-4 4-4M6 12h9" />
+              </svg>
+            </a>
+          )}
         </div>
       </header>
 
@@ -1000,7 +1007,6 @@ function Auditoria({ usuario, tema, setTema }) {
           usuario={usuario}
           registros={acompanamientos}
           setRegistros={setAcompanamientos}
-          onVolver={() => setVista('auditoria')}
           triggerToast={triggerToast}
         />
       ) : (
@@ -1361,46 +1367,40 @@ function Auditoria({ usuario, tema, setTema }) {
       </main>
       )}
 
-      {/* En móvil repite las acciones principales que no caben en el encabezado de escritorio. */}
-      <nav
-        className={`sm:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-slate-200 grid shadow-[0_-4px_12px_rgba(15,23,42,0.06)] ${vista === 'acompanamiento' ? 'grid-cols-1' : 'grid-cols-4'}`}
-        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
-      >
-        {vista === 'acompanamiento' ? (
-          <button type="button" onClick={() => setVista('auditoria')} className="flex flex-col items-center gap-1 py-2.5 text-indigo-700 cursor-pointer">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 16l-4-4 4-4M6 12h9"/></svg>
-            <span className="text-[11px] font-semibold">Volver a auditoría</span>
+      {/* En móvil repite las acciones principales que no caben en el encabezado de escritorio.
+          En Acompañamiento no se muestra: el único retorno es el botón superior del header. */}
+      {vista === 'auditoria' && (
+        <nav
+          className="sm:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-slate-200 grid grid-cols-4 shadow-[0_-4px_12px_rgba(15,23,42,0.06)]"
+          style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+        >
+          <button
+            type="button"
+            onClick={() => {
+              setIsDrawerOpen(false);
+              setIsHistorialOpen(false);
+              setIsEmailModalOpen(false);
+              setVista('acompanamiento');
+            }}
+            className="flex flex-col items-center gap-1 py-2.5 text-indigo-700 cursor-pointer"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            <span className="text-[11px] font-semibold">Acompañamiento</span>
           </button>
-        ) : (
-          <>
-            <button
-              type="button"
-              onClick={() => {
-                setIsDrawerOpen(false);
-                setIsHistorialOpen(false);
-                setIsEmailModalOpen(false);
-                setVista('acompanamiento');
-              }}
-              className="flex flex-col items-center gap-1 py-2.5 text-indigo-700 cursor-pointer"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-              <span className="text-[11px] font-semibold">Acompañamiento</span>
-            </button>
-            <button type="button" onClick={() => setIsHistorialOpen(true)} className="flex flex-col items-center gap-1 py-2.5 text-slate-600 cursor-pointer">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7zm0 5h16M9 4v16"/></svg>
-              <span className="text-[11px] font-semibold">Registros ({historialAuditorias.length})</span>
-            </button>
-            <button type="button" onClick={() => guardarAuditoria()} className="flex flex-col items-center gap-1 py-2.5 text-emerald-700 cursor-pointer">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
-              <span className="text-[11px] font-semibold">Guardar</span>
-            </button>
-            <button type="button" onClick={() => setIsEmailModalOpen(true)} className="flex flex-col items-center gap-1 py-2.5 text-indigo-700 cursor-pointer">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-              <span className="text-[11px] font-semibold">Correo</span>
-            </button>
-          </>
-        )}
-      </nav>
+          <button type="button" onClick={() => setIsHistorialOpen(true)} className="flex flex-col items-center gap-1 py-2.5 text-slate-600 cursor-pointer">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7zm0 5h16M9 4v16"/></svg>
+            <span className="text-[11px] font-semibold">Registros ({historialAuditorias.length})</span>
+          </button>
+          <button type="button" onClick={() => guardarAuditoria()} className="flex flex-col items-center gap-1 py-2.5 text-emerald-700 cursor-pointer">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+            <span className="text-[11px] font-semibold">Guardar</span>
+          </button>
+          <button type="button" onClick={() => setIsEmailModalOpen(true)} className="flex flex-col items-center gap-1 py-2.5 text-indigo-700 cursor-pointer">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span className="text-[11px] font-semibold">Correo</span>
+          </button>
+        </nav>
+      )}
 
       {/* El panel lateral permite editar defectos, segundas, comentarios y fotos de evidencia. */}
       {isDrawerOpen && (

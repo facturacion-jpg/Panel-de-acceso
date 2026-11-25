@@ -32,7 +32,7 @@ const resumen = (registro) =>
 
 // Pantalla independiente dentro de Auditorías: captura las observaciones previas
 // y mantiene un historial para que la auditoría final pueda vincularlas por ref + lote.
-export default function Acompanamiento({ usuario, registros, setRegistros, onVolver, triggerToast }) {
+export default function Acompanamiento({ usuario, registros, setRegistros, triggerToast }) {
   const [form, setForm] = useState(crearFormulario);
   const [guardando, setGuardando] = useState(false);
 
@@ -113,16 +113,6 @@ export default function Acompanamiento({ usuario, registros, setRegistros, onVol
             Registra las observaciones antes de la auditoría final. Se vinculan por referencia y lote.
           </p>
         </div>
-        <button
-          type="button"
-          onClick={onVolver}
-          className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all border border-slate-300 cursor-pointer"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 16l-4-4 4-4M6 12h9" />
-          </svg>
-          Volver a auditoría
-        </button>
       </div>
 
       <section className="bg-white text-slate-800 rounded-2xl shadow-sm border border-slate-200 overflow-visible">
