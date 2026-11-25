@@ -1303,6 +1303,31 @@
   margin-top: 8px;
 }
 
+.closure-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.85fr) minmax(0, 1.6fr);
+  gap: 14px;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.closure-row .result-banner {
+  margin: 0;
+  height: 100%;
+  align-content: center;
+}
+
+.closure-row .action-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.closure-row .action-buttons .button {
+  width: 100%;
+  white-space: nowrap;
+}
+
 .email-composer {
   flex: 1;
   min-height: 0;
@@ -1613,6 +1638,10 @@ footer span {
     padding: 0 14px;
   }
 
+  .closure-row .action-buttons {
+    grid-template-columns: 1fr;
+  }
+
   .brand {
     min-width: 0;
     gap: 8px;
@@ -1842,6 +1871,10 @@ footer span {
 
   .analytics-grid,
   .bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .closure-row {
     grid-template-columns: 1fr;
   }
 

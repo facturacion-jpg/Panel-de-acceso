@@ -917,76 +917,75 @@ export default function App() {
               <CheckCircle2 size={19} />
             </div>
 
-            <div className="result-banner">
+            <div className="closure-row">
+              <div className="result-banner">
+                <span>Resultado del lote</span>
 
-              <span>Resultado del lote</span>
+                <strong
+                  className={
+                    lot.decision === "Lote aceptado"
+                      ? "accepted"
+                      : lot.decision === "Lote rechazado"
+                      ? "rejected"
+                      : ""
+                  }
+                >
+                  {lot.decision}
+                </strong>
 
-              <strong
-                className={
-                  lot.decision === "Lote aceptado"
-                    ? "accepted"
-                    : lot.decision === "Lote rechazado"
-                    ? "rejected"
-                    : ""
-                }
-              >
-                {lot.decision}
-              </strong>
+                <small>
+                  {lot.average === null
+                    ? "Completa los datos de los rollos para calcular."
+                    : `Promedio: ${lot.average.toFixed(2)} puntos / 100 yd²`}
+                </small>
+              </div>
 
-              <small>
-                {lot.average === null
-                  ? "Completa los datos de los rollos para calcular."
-                  : `Promedio: ${lot.average.toFixed(2)} puntos / 100 yd²`}
-              </small>
+              <div className="action-buttons">
+                <button
+                  className="button primary"
+                  onClick={handleSave}
+                  disabled={!cloudReady}
+                >
+                  <Save size={16} />
+                  {!cloudReady ? "Conectando…" : saved
+                    ? "Guardado"
+                    : editingId
+                      ? "Actualizar inspección"
+                      : "Guardar inspección"}
+                </button>
+                {editingId && (
+                  <button
+                    className="button ghost"
+                    onClick={handleNewInspection}
+                  >
+                    <Plus size={16} />
+                    Nueva inspección
+                  </button>
+                )}
 
-            </div>
+                <button
+                  className="button secondary"
+                  type="button"
+                  onClick={() => {
+                    setEmailError("");
+                    setEmailSuccess("");
+                    setEmailDialogOpen(true);
+                  }}
+                  aria-haspopup="dialog"
+                  aria-expanded={emailDialogOpen}
+                >
+                  <Mail size={16} />
+                  Enviar correo
+                </button>
 
-            <div className="action-buttons">
-
-              <button
-                className="button primary"
-                onClick={handleSave}
-                disabled={!cloudReady}
-              >
-                <Save size={16} />
-                {!cloudReady ? "Conectando…" : saved
-                  ? "Guardado"
-                  : editingId
-                    ? "Actualizar inspección"
-                    : "Guardar inspección"}
-              </button>
-              {editingId && (
                 <button
                   className="button ghost"
-                  onClick={handleNewInspection}
+                  onClick={() => window.print()}
                 >
-                  <Plus size={16} />
-                  Nueva inspección
+                  <ArrowDownToLine size={16} />
+                  Imprimir / PDF
                 </button>
-              )}
-
-              <button
-                className="button secondary"
-                type="button"
-                onClick={() => {
-                  setEmailError("");
-                  setEmailSuccess("");
-                  setEmailDialogOpen(true);
-                }}
-                aria-haspopup="dialog"
-                aria-expanded={emailDialogOpen}
-              >
-                <Mail size={16} />
-                Enviar correo
-              </button>
-
-              <button
-                className="button ghost"
-                onClick={() => window.print()}
-              >
-                <ArrowDownToLine size={16} />
-                Imprimir / PDF
-              </button>
+              </div>
             </div>
 
             {formError && (
