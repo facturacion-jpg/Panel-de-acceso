@@ -73,11 +73,14 @@
 }
 
 .fd-table th {
-  padding: 6px 8px;
-  background: #242420;
-  color: #f5c400;
+  padding: 7px 8px;
+  border-bottom: 1px solid #e8ede8;
+  border-radius: 8px 8px 0 0;
+  background: #f1f5f0;
+  color: #2d4036;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   text-align: left;
   white-space: nowrap;
 }
