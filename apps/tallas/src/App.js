@@ -7,7 +7,9 @@ import { auth } from './firebase.js';
 import { loadTallasData, saveTallasPlan, saveTallasSet } from './cloud.js';
 function App(){
  const user=auth.currentUser;
-  const inicial=(user?.email||'?').trim().charAt(0).toUpperCase()||'?';
+  const correo=user?.email||'—';
+  const inicial=correo.trim().charAt(0).toUpperCase()||'?';
+  const tamanoCorreo=Math.max(8,Math.min(12.5,12.5*26/Math.max(correo.length,1)));
  const [cloudReady,setCloudReady]=useState(false),[cloudError,setCloudError]=useState(''),[PlanoView,setPlanoView]=useState(null),[MailView,setMailView]=useState(null);
  const [v,setV]=useState('tablero'),[plano,setPlano]=useLS(`tallas:${user?.uid}:plano`,PLANO0),[sets,setSets]=useLS(`tallas:${user?.uid}:sets`,SETS0),[por,setPor]=useLS('por','Mari'),[theme,setTheme]=useLS('theme','light'),[menuOpen,setMenuOpen]=useState(() => typeof window !== 'undefined' ? window.matchMedia('(min-width: 821px)').matches : true),[navCompact,setNavCompact]=useState(false),[m,setM]=useState(null);
  useEffect(()=>{let canceled=false;loadTallasData().then(data=>{if(canceled)return;setSets(data.sets);setPlano(data.plano);setCloudError('');setCloudReady(true)}).catch(error=>{console.error('No se pudieron sincronizar los datos de Tallas:',error);if(canceled)return;setCloudError(`No se pudieron sincronizar los datos con Firebase (${error?.code||'error'}). Los cambios nuevos podrían quedar solo en este dispositivo.`);setCloudReady(true)});return()=>{canceled=true}},[user?.uid]);
@@ -21,6 +23,7 @@ function App(){
  const add=l=>{const nuevos=l.map((o,i)=>({id:Date.now()+i,oc:o.oc,ref:o.ref,marca:o.marca,colores:o.colores,web:'pendiente',webF:'',fin:'pendiente',finF:'',unid:'',env:[],obs:'',por}));setSets(prev=>[...prev,...nuevos]);Promise.all(nuevos.map(record=>saveTallasSet(user,record))).then(()=>setCloudError('')).catch(error=>{console.error(error);setCloudError('No se pudieron guardar los sets en Firebase.')})};
  const changePlano=updater=>{const next=typeof updater==='function'?updater(plano):updater;setPlano(next);saveTallasPlan(user,next).then(()=>setCloudError('')).catch(error=>{console.error(error);setCloudError('No se pudo guardar el plano en Firebase.')})};
  const N=[['tablero','Tablero',0,'grid'],['nuevo','Nuevo set',0,'plus'],['web','Auditoría web',sets.filter(s=>s.web!=='ok').length,'globe'],['final','Auditoría final',sets.filter(s=>s.web==='ok'&&s.fin!=='aprobado').length,'check'],['plano','Plano',0,'file']];
+  const vistaActual=N.find(([k])=>k===v)?.[1]||'';
  const icon=name=>name==='grid'?html`<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>`:
  name==='plus'?html`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>`:
  name==='globe'?html`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>`:
@@ -30,9 +33,9 @@ function App(){
  if(!cloudReady)return html`<main className="panel empty" role="status">Cargando los datos compartidos de Tallas…</main>`;
  return html`<div className=${'app'+(menuOpen?' menu-open':'')}><aside className="side" aria-label="Menú principal"><div className="brand">Estado set de tallas<small>Control de auditorías</small></div>
  ${N.map(([k,t,c,i])=>html`<button key=${k} type="button" className="nav" data-tip=${t} aria-label=${t} aria-current=${v===k?'page':undefined} onClick=${()=>navigate(k)}><span className="nav-icon">${icon(i)}</span><span className="nav-label">${t}</span>${c>0&&html`<span className="cnt">${c}</span>`}</button>`)}
- <div className="side-user" title=${user?.email||''}><span className="side-avatar" aria-hidden="true">${inicial}</span><span className="side-user-text"><span>Sesión</span><b>${user?.email||'—'}</b></span></div></aside>
+ <div className="side-user" title=${user?.email||''}><span className="side-avatar" aria-hidden="true">${inicial}</span><span className="side-user-text"><span>Sesión</span><b style=${{fontSize:`${tamanoCorreo}px`}}>${correo}</b></span></div></aside>
  ${menuOpen&&html`<button type="button" className="menu-backdrop" aria-label="Cerrar menú" onClick=${()=>setMenuOpen(false)}></button>`}
- <main><div className="topbar"><button type="button" className="menu-toggle" aria-label=${menuOpen?'Cerrar menú':'Abrir menú'} aria-expanded=${menuOpen} onClick=${()=>setMenuOpen(!menuOpen)}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div className="theme-bar"><a className="back-to-panel" href="/?retornoAplicativo=1" aria-label="Volver al panel de aplicativos"><span aria-hidden="true">←</span><span>Volver al panel</span></a>${quien}${themeToggle}</div></div>
+ <main><div className="topbar"><button type="button" className="menu-toggle" aria-label=${menuOpen?'Cerrar menú':'Abrir menú'} aria-expanded=${menuOpen} onClick=${()=>setMenuOpen(!menuOpen)}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><span className="view-name">${vistaActual}</span><div className="theme-bar"><a className="back-to-panel" href="/?retornoAplicativo=1" data-tip="Volver al panel" aria-label="Volver al panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5"/><path d="M10 16l-4-4 4-4M6 12h9"/></svg></a>${quien}${themeToggle}</div></div>
  ${cloudError&&html`<p className="mail-error" role="alert">${cloudError}</p>`}
  ${v==='tablero'&&html`<${Tablero} sets=${sets}/>`}${v==='nuevo'&&html`<${Nuevo} plano=${plano} sets=${sets} add=${add} go=${setV}/>`}
  ${v==='web'&&html`<${Web} sets=${sets} upd=${upd}/>`}${v==='final'&&html`<${Final} sets=${sets} upd=${upd} mail=${setM}/>`}${v==='plano'&&(PlanoView?html`<${PlanoView} plano=${plano} setPlano=${changePlano}/>`:html`<p className="panel empty" role="status">Cargando herramienta de Excel…</p>`)}</main>
