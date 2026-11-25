@@ -997,6 +997,7 @@ function Auditoria({ usuario, tema, setTema }) {
                 type="number" 
                 min="0"
                 name="tamañoLote" 
+                placeholder="0"
                 value={formData.tamañoLote} 
                 onChange={handleFormChange}
                 className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none"
