@@ -1088,7 +1088,7 @@ function Auditoria({ usuario, tema, setTema }) {
           </div>
 
           <div className="p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div className="bg-slate-50 p-4 rounded-xl border-2 border-indigo-400">
               <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Letra Código</p>
               <p className="text-2xl font-black text-indigo-700">{planMuestreo.letra}</p>
             </div>
@@ -1096,19 +1096,19 @@ function Auditoria({ usuario, tema, setTema }) {
               <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Muestra (n)</p>
               <p className="text-2xl font-black text-slate-900">{planMuestreo.muestraTotal}</p>
             </div>
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div className="bg-slate-50 p-4 rounded-xl border-2 border-indigo-400">
               <p className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider mb-1">Ac Mayores</p>
               <p className="text-2xl font-black text-emerald-700">{planMuestreo.acMayores}</p>
             </div>
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div className="bg-slate-50 p-4 rounded-xl border-2 border-indigo-400">
               <p className="text-[11px] font-bold text-rose-700 uppercase tracking-wider mb-1">Re Mayores</p>
               <p className="text-2xl font-black text-rose-700">{planMuestreo.reMayores}</p>
             </div>
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div className="bg-slate-50 p-4 rounded-xl border-2 border-indigo-400">
               <p className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider mb-1">Ac Menores</p>
               <p className="text-2xl font-black text-emerald-700">{planMuestreo.acMenores}</p>
             </div>
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div className="bg-slate-50 p-4 rounded-xl border-2 border-indigo-400">
               <p className="text-[11px] font-bold text-rose-700 uppercase tracking-wider mb-1">Re Menores</p>
               <p className="text-2xl font-black text-rose-700">{planMuestreo.reMenores}</p>
             </div>
