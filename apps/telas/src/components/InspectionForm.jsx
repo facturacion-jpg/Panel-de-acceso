@@ -13,7 +13,6 @@ const Field = ({
   onChange,
   placeholder = "",
   type = "text",
-  list,
   icon: Icon
 }) => (
   <label className="field">
@@ -25,7 +24,6 @@ const Field = ({
 
     <input
       type={type}
-      list={list}
       value={value ?? ""}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
@@ -37,7 +35,7 @@ const Field = ({
 const normalizar = (texto) =>
   String(texto ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
-function SupplierField({ value, onChange, options, placeholder }) {
+function MasterField({ label, icon: Icon, id, value, onChange, options, placeholder }) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const wrapperRef = useRef(null);
@@ -89,12 +87,12 @@ function SupplierField({ value, onChange, options, placeholder }) {
   };
 
   return (
-    <label className="field supplier-field" ref={wrapperRef}>
+    <label className="field master-field" ref={wrapperRef}>
       <span>
-        <Truck size={16} />
-        Proveedor de tela
+        {Icon && <Icon size={16} />}
+        {label}
       </span>
-      <div className="supplier-combobox">
+      <div className="master-combobox">
         <input
           type="text"
           value={value ?? ""}
@@ -109,12 +107,12 @@ function SupplierField({ value, onChange, options, placeholder }) {
           placeholder={placeholder}
           role="combobox"
           aria-expanded={open}
-          aria-controls="supplier-options"
+          aria-controls={`${id}-options`}
           aria-autocomplete="list"
           autoComplete="off"
         />
         {open && (
-          <div className="supplier-options" id="supplier-options" role="listbox">
+          <div className="master-options" id={`${id}-options`} role="listbox">
             {filtered.length ? (
               filtered.map((option, index) => (
                 <button
@@ -131,7 +129,7 @@ function SupplierField({ value, onChange, options, placeholder }) {
                 </button>
               ))
             ) : (
-              <p className="supplier-empty">Sin coincidencias</p>
+              <p className="master-empty">Sin coincidencias</p>
             )}
           </div>
         )}
@@ -178,19 +176,23 @@ export default function InspectionForm({
           onChange={(v) => updateInfo("date", v)}
         />
 
-        <SupplierField
+        <MasterField
+          label="Proveedor de tela"
+          icon={Truck}
+          id="supplier"
           value={info.supplier}
           onChange={(v) => updateInfo("supplier", v)}
           options={supplierOptions}
           placeholder="Ingresa el proveedor"
         />
 
-        <Field
+        <MasterField
           label="Nombre de la tela"
           icon={Package}
+          id="fabric"
           value={info.fabric}
           onChange={(v) => updateInfo("fabric", v)}
-          list="master-fabrics"
+          options={fabricOptions}
           placeholder="Ingresa el nombre de la tela"
         />
 
@@ -203,10 +205,6 @@ export default function InspectionForm({
         />
 
       </div>
-
-      <datalist id="master-fabrics">
-        {fabricOptions.map((fabric) => <option key={fabric} value={fabric} />)}
-      </datalist>
 
       {masterReference && (
         <div className="master-details" role="status">

@@ -49,11 +49,11 @@
   box-shadow: 0 0 0 3px #fff4bf;
 }
 
-.supplier-combobox {
+.master-combobox {
   position: relative;
 }
 
-.supplier-options {
+.master-options {
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
@@ -68,7 +68,7 @@
   box-shadow: 0 12px 28px #14202b29;
 }
 
-.supplier-options button {
+.master-options button {
   display: block;
   width: 100%;
   padding: 7px 9px;
@@ -82,22 +82,22 @@
   cursor: pointer;
 }
 
-.supplier-options button:hover,
-.supplier-options button.is-active {
+.master-options button:hover,
+.master-options button.is-active {
   background: #fff6cf;
   color: #171717;
 }
 
-.supplier-options::-webkit-scrollbar {
+.master-options::-webkit-scrollbar {
   width: 8px;
 }
 
-.supplier-options::-webkit-scrollbar-thumb {
+.master-options::-webkit-scrollbar-thumb {
   border-radius: 8px;
   background: #d9e2da;
 }
 
-.supplier-empty {
+.master-empty {
   margin: 0;
   padding: 10px;
   color: #6b776e;
