@@ -49,6 +49,61 @@
   box-shadow: 0 0 0 3px #fff4bf;
 }
 
+.supplier-combobox {
+  position: relative;
+}
+
+.supplier-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 4px;
+  border: 1px solid #d9e2da;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 12px 28px #14202b29;
+}
+
+.supplier-options button {
+  display: block;
+  width: 100%;
+  padding: 7px 9px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: #3b4c41;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.supplier-options button:hover,
+.supplier-options button.is-active {
+  background: #fff6cf;
+  color: #171717;
+}
+
+.supplier-options::-webkit-scrollbar {
+  width: 8px;
+}
+
+.supplier-options::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #d9e2da;
+}
+
+.supplier-empty {
+  margin: 0;
+  padding: 10px;
+  color: #6b776e;
+  font-size: 11px;
+}
+
 .master-note {
   margin: 14px 0 0;
   color: #526158;
