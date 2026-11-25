@@ -3,8 +3,8 @@
 export const APPS = [
   {
     id: "crearte",
-    nombre: "Crearte",
-    url: "/crearte/"
+    nombre: "Auditorías",
+    url: "/auditorias/"
   },
   {
     id: "tallas",

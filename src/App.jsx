@@ -60,7 +60,7 @@ function IniciarSesion({ mensaje, onLogin, onRegister, onRecover, tema, onToggle
     } finally { setCargando(false); }
   };
   return <main className="login-wrap"><BotonTema tema={tema} onClick={onToggleTheme} /><section className="login-card">
-    <span className="eyebrow">CREARTE · APLICATIVOS</span><h1>{modo === "registro" ? "Crear cuenta" : "Ingresar"}</h1>
+    <span className="eyebrow">CONFECCIONARTE · APLICATIVOS</span><h1>{modo === "registro" ? "Crear cuenta" : "Ingresar"}</h1>
     <p className="sub">{modo === "registro" ? "Registra tu cuenta para solicitar acceso a los aplicativos." : "Ingresa para abrir los aplicativos que tienes autorizados."}</p>
     <div className="login-modes"><button type="button" className={modo === "ingresar" ? "selected" : ""} onClick={() => { setModo("ingresar"); setError(""); setMensajeLocal(""); }}>Ingresar</button><button type="button" className={modo === "registro" ? "selected" : ""} onClick={() => { setModo("registro"); setError(""); setMensajeLocal(""); }}>Crear cuenta</button></div>
     <form className="login-form" onSubmit={enviar}>
@@ -79,7 +79,7 @@ function IniciarSesion({ mensaje, onLogin, onRegister, onRecover, tema, onToggle
 function PanelAdmin({ usuario, onLogout, tema, onToggleTheme }) {
   const { correos, agregar, editar, eliminar, alternar, cargando, error } = useAccesos();
   const [vista, setVista] = useState("accesos");
-  return <div className="wrap"><header className="page-head"><div><span className="eyebrow">CREARTE · ADMINISTRACIÓN</span><h1>Panel administrativo</h1><p className="sub">Gestiona accesos y consulta los registros de todos los aplicativos.</p><p className="firebase-project">Firebase: {FIREBASE_PROJECT_ID} · base {FIREBASE_DATABASE_ID}</p></div><div className="admin-session"><span>{usuario.email}</span><BotonTema tema={tema} onClick={onToggleTheme} /><button type="button" className="del" onClick={onLogout}>Cerrar sesión</button></div></header>
+  return <div className="wrap"><header className="page-head"><div><span className="eyebrow">CONFECCIONARTE · ADMINISTRACIÓN</span><h1>Panel administrativo</h1><p className="sub">Gestiona accesos y consulta los registros de todos los aplicativos.</p><p className="firebase-project">Firebase: {FIREBASE_PROJECT_ID} · base {FIREBASE_DATABASE_ID}</p></div><div className="admin-session"><span>{usuario.email}</span><BotonTema tema={tema} onClick={onToggleTheme} /><button type="button" className="del" onClick={onLogout}>Cerrar sesión</button></div></header>
     <nav className="admin-main-tabs" aria-label="Secciones administrativas"><button type="button" className={vista === "accesos" ? "selected" : ""} onClick={() => setVista("accesos")}>Accesos</button><button type="button" className={vista === "registros" ? "selected" : ""} onClick={() => setVista("registros")}>Registros</button>{APPS.map((app) => <a key={app.id} href={urlAplicativo(app)} onClick={marcarSalidaAplicativo}>{app.nombre}</a>)}</nav>
     {vista === "registros" ? <AdminRegistros /> : <><SolicitudesRegistro correos={correos} onAdd={agregar} /><AddEmailForm onAdd={agregar} /><div className="legend"><span><span className="dot dot-on" />Con acceso</span><span><span className="dot dot-off" />Sin acceso</span></div>
       {error && <p className="error-banner" role="alert">{error}</p>}{cargando ? <p className="empty">Cargando permisos compartidos…</p> : correos.length === 0 ? <p className="empty">No hay correos registrados todavía.</p> : <ul className="list">{correos.map((correo) => <EmailCard key={correo.id} correo={correo} onToggle={alternar} onEdit={editar} onDelete={eliminar} />)}</ul>}</>}
@@ -88,7 +88,7 @@ function PanelAdmin({ usuario, onLogout, tema, onToggleTheme }) {
 
 function PortalAplicativos({ usuario, permisos, mensaje, onLogout, tema, onToggleTheme }) {
   const disponibles = APPS.filter((app) => permisos[app.id]);
-  return <main className="wrap"><header className="page-head"><div><span className="eyebrow">CREARTE · APLICATIVOS</span><h1>Hola, {usuario.displayName || usuario.email}</h1><p className="sub">Estos son los aplicativos disponibles para tu cuenta.</p></div><div className="admin-session"><BotonTema tema={tema} onClick={onToggleTheme} /><button type="button" className="del" onClick={onLogout}>Cerrar sesión</button></div></header>
+  return <main className="wrap"><header className="page-head"><div><span className="eyebrow">CONFECCIONARTE · APLICATIVOS</span><h1>Hola, {usuario.displayName || usuario.email}</h1><p className="sub">Estos son los aplicativos disponibles para tu cuenta.</p></div><div className="admin-session"><BotonTema tema={tema} onClick={onToggleTheme} /><button type="button" className="del" onClick={onLogout}>Cerrar sesión</button></div></header>
     {disponibles.length === 0 && <p className="empty" role="status">{mensaje || "Tu cuenta aún no tiene aplicativos habilitados. Solicita acceso al administrador."}</p>}
     <section className="app-launcher" aria-label="Aplicativos autorizados">{disponibles.map((app) => <article className="app-card" key={app.id}><h2>{app.nombre}</h2>{app.url ? <a className="btn" href={urlAplicativo(app)} onClick={marcarSalidaAplicativo}>Abrir aplicativo <span aria-hidden="true">↗</span></a> : <p className="sub">La dirección de este aplicativo aún no está configurada.</p>}</article>)}</section>
   </main>;

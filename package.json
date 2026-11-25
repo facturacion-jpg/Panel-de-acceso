@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/dev.js",
-    "dev:crearte": "npm --prefix apps/crearte run dev",
-    "build": "vite build && npm --prefix apps/crearte run build -- --base=/crearte/ --outDir=../../dist/crearte && npm --prefix apps/tallas run build -- --base=/tallas/ --outDir=../../dist/tallas && npm --prefix apps/telas run build -- --base=/telas/ --outDir=../../dist/telas",
+    "dev:auditorias": "npm --prefix apps/auditorias run dev",
+    "build": "vite build && npm --prefix apps/auditorias run build -- --base=/auditorias/ --outDir=../../dist/auditorias && npm --prefix apps/tallas run build -- --base=/tallas/ --outDir=../../dist/tallas && npm --prefix apps/telas run build -- --base=/telas/ --outDir=../../dist/telas",
     "preview": "vite preview"
   },
   "dependencies": {

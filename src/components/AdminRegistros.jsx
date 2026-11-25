@@ -4,7 +4,7 @@ import { db } from '../firebase';
 import { COTIZADOR_SUPABASE } from '../config/cotizadorSupabase';
 
 const MODULOS = [
-  { id: 'crearte', nombre: 'Crearte · Auditorías' },
+  { id: 'crearte', nombre: 'Auditorías' },
   { id: 'tallas', nombre: 'Estado de tallas' },
   { id: 'telas', nombre: 'Inspección de telas' },
   { id: 'cotizador_muestras', nombre: 'Cotizador de muestras' },

@@ -1,4 +1,4 @@
-# Crearte By Confeccionarte
+# Auditorías By Confeccionarte
 
 Aplicación web para registrar auditorías de calidad de confección. Permite calcular un plan de muestreo AQL, anotar defectos y segundas, guardar el historial y generar reportes para compartir.
 
@@ -30,7 +30,7 @@ El proyecto no define actualmente un comando de pruebas automatizadas.
 
 ## Flujo de uso
 
-1. Iniciar sesión en el portal de accesos y abrir Crearte desde el aplicativo autorizado. Crearte comparte la sesión de Firebase y valida el permiso `crearte` antes de mostrar el módulo.
+1. Iniciar sesión en el portal de accesos y abrir Auditorías desde el aplicativo autorizado. Auditorías comparte la sesión de Firebase y valida el permiso interno `crearte` antes de mostrar el módulo.
 2. Completar los datos del lote y los parámetros de inspección. La aplicación calcula el muestreo y el dictamen conforme a las tablas AQL incluidas en `src/App.jsx`.
 3. Registrar defectos, segundas, observaciones y fotos de evidencia.
 4. Guardar la auditoría y, si se requiere, consultar el historial, exportar un archivo Excel, descargar el reporte PDF o enviar el reporte por correo.
@@ -57,7 +57,7 @@ El proyecto no define actualmente un comando de pruebas automatizadas.
 - Las fotos se comprimen en el navegador antes de guardarse localmente. `src/db.js` excluye los datos de imagen al escribir en Firestore y guarda el número de fotos; el documento remoto no contiene las imágenes.
 - La comparación de administrador en `src/db.js` es una comprobación de interfaz. Las reglas de seguridad de Firestore deben aplicar los permisos reales en el servidor y no depender de esa comprobación.
 - El envío de correos usa EmailJS; sus identificadores y la plantilla se configuran actualmente en `src/App.jsx`. Configura y verifica la plantilla correspondiente en EmailJS.
-- La sesión la administra el portal de accesos con Firebase Authentication; Crearte valida la sesión y el permiso antes de mostrar el módulo.
+- La sesión la administra el portal de accesos con Firebase Authentication; Auditorías valida la sesión y el permiso antes de mostrar el módulo.
 
 ## Consideraciones de seguridad
 

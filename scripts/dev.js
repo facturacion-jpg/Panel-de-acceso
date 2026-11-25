@@ -4,7 +4,7 @@ import { dirname, resolve } from 'node:path';
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const viteCli = resolve(projectRoot, 'node_modules/vite/bin/vite.js');
-const crearteViteCli = resolve(projectRoot, 'apps/crearte/node_modules/vite/bin/vite.js');
+const auditoriasViteCli = resolve(projectRoot, 'apps/auditorias/node_modules/vite/bin/vite.js');
 const tallasViteCli = resolve(projectRoot, 'apps/tallas/node_modules/vite/bin/vite.js');
 const telasViteCli = resolve(projectRoot, 'apps/telas/node_modules/vite/bin/vite.js');
 const panelPort = Number(process.env.PANEL_PORT) || 5173;
@@ -87,7 +87,7 @@ process.on('SIGINT', () => stopAll(0));
 process.on('SIGTERM', () => stopAll(0));
 
 Promise.all([
-  start('Crearte', crearteViteCli, resolve(projectRoot, 'apps/crearte'), ['--force', '--base=/crearte/'], true),
+  start('Auditorías', auditoriasViteCli, resolve(projectRoot, 'apps/auditorias'), ['--force', '--base=/auditorias/'], true),
   start('Tallas', tallasViteCli, resolve(projectRoot, 'apps/tallas'), ['--force', '--base=/tallas/'], true),
   start('Telas', telasViteCli, resolve(projectRoot, 'apps/telas'), ['--force', '--base=/telas/'], true),
 ]).then(() => {

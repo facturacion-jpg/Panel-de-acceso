@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { initializeFirestore } from "firebase/firestore";
 
 // Configuración de la app web del panel. Si no hay variables de entorno,
-// conserva como respaldo la configuración de Crearte del proyecto existente.
+// conserva como respaldo la configuración del proyecto existente.
 const firebaseConfigExistente = {
   apiKey: "AIzaSyA1__VruS3tHvNpeMpg6g50-5NyNmcMXlQ",
   authDomain: "crearte-by-confeccionart-6febe.firebaseapp.com",

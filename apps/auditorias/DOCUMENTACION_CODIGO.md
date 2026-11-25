@@ -1,4 +1,4 @@
-# Guía completa del código de Crearte
+# Guía completa del código de Auditorías
 
 Esta guía recorre los archivos de la aplicación, explica cómo se conectan y describe el propósito de sus secciones y operaciones. Los comentarios del propio código señalan las reglas y decisiones importantes junto a su implementación. Las líneas que se repiten con el mismo patrón visual (por ejemplo, clases Tailwind de cada campo o atributos de cada SVG) cumplen el propósito indicado para el bloque que las contiene.
 
@@ -205,7 +205,7 @@ Las expresiones JSX `{...}` insertan valores o expresiones JavaScript. Las condi
 
 - El comentario JSDoc declara el tipo de la configuración para herramientas compatibles.
 - `content` indica que Tailwind inspeccione `index.html` y archivos JS/JSX de `src` para detectar clases.
-- `theme.extend.colors` redefine tonos `indigo` y `slate` utilizados por la interfaz para la identidad visual de Crearte.
+- `theme.extend.colors` redefine tonos `indigo` y `slate` utilizados por la interfaz para la identidad visual de Auditorías.
 - `plugins` no añade plugins Tailwind adicionales.
 
 ### `postcss.config.js`

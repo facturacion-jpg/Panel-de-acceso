@@ -17,11 +17,11 @@ export default defineConfig({
   envDir: projectRoot,
 
   // En el Render independiente sirve desde /; el portal agrupado sobrescribe
-  // esta base al iniciar el servidor y al compilar en /crearte/.
+  // esta base al iniciar el servidor y al compilar en /auditorias/.
   base: "/",
 
   // Todas las importaciones de Firebase deben resolver a la misma copia
-  // instalada junto a Crearte, aunque también exista otra en el panel.
+  // instalada junto a Auditorías, aunque también exista otra en el panel.
   resolve: {
     dedupe: ["firebase"],
   },

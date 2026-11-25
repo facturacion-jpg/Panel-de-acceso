@@ -10,9 +10,9 @@ export default defineConfig({
     port: Number(process.env.PANEL_PORT) || 5173,
     strictPort: true,
 
-    // Conecta el panel con Crearte sin cambiar de dominio.
+    // Conecta el panel con Auditorías sin cambiar de dominio.
     proxy: {
-      "/crearte": {
+      "/auditorias": {
         target: "http://127.0.0.1:5174",
         changeOrigin: false,
         secure: false,

@@ -3,7 +3,7 @@ services:
     runtime: static
     name: panel-accesos
     plan: free
-    buildCommand: npm install && npm --prefix apps/crearte ci && npm --prefix apps/tallas ci && npm --prefix apps/telas ci && npm run build
+    buildCommand: npm install && npm --prefix apps/auditorias ci && npm --prefix apps/tallas ci && npm --prefix apps/telas ci && npm run build
     staticPublishPath: ./dist
     envVars:
       - key: NODE_VERSION
@@ -16,11 +16,11 @@ services:
         value: CTcGehX8rVCk1JDt6
     routes:
       - type: rewrite
-        source: /crearte
-        destination: /crearte/index.html
+        source: /auditorias
+        destination: /auditorias/index.html
       - type: rewrite
-        source: /crearte/*
-        destination: /crearte/index.html
+        source: /auditorias/*
+        destination: /auditorias/index.html
       - type: rewrite
         source: /tallas
         destination: /tallas/index.html

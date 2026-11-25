@@ -2,7 +2,7 @@ import { getApp, getApps, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { initializeFirestore } from 'firebase/firestore';
 
-// Crearte usa una sola copia del SDK de Firebase para inicializar app, Auth y
+// Auditorías usa una sola copia del SDK de Firebase para inicializar app, Auth y
 // Firestore. En desarrollo, el portal y este módulo se sirven desde dos Vite
 // distintos; reexportar la instancia del portal mezclaba sus copias del SDK.
 const firebaseConfigExistente = {

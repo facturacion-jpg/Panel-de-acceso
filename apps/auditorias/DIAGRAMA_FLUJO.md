@@ -1,6 +1,6 @@
-# Diagrama gráfico de Crearte
+# Diagrama gráfico de Auditorías
 
-![Diagrama gráfico del flujo de la aplicación Crearte](./DIAGRAMA_FLUJO.svg)
+![Diagrama gráfico del flujo de la aplicación Auditorías](./DIAGRAMA_FLUJO.svg)
 
 [Abrir o descargar el diagrama en formato SVG](./DIAGRAMA_FLUJO.svg)
 

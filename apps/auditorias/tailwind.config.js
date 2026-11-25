@@ -4,7 +4,7 @@ export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
-      // Tema Crearte: amarillo y negro.
+      // Tema Auditorías: amarillo y negro.
       // El código usa clases "indigo-*" y "slate-*"; aquí se redefinen
       // para que toda la app cambie de color sin editar App.jsx ni Login.jsx.
       colors: {

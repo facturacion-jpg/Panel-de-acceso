@@ -824,8 +824,8 @@ function Auditoria({ usuario, tema, setTema }) {
         <div className="flex items-center gap-3 min-w-0">
           <div className="flex flex-col items-start leading-none">
             <div className="flex items-center">
-              <span className="text-2xl font-black" style={{ color: '#FFD600' }}>CRE</span>
-              <span className="text-2xl font-black text-black">ARTE</span>
+              <span className="text-2xl font-black" style={{ color: '#FFD600' }}>AU</span>
+              <span className="text-2xl font-black text-black">DITORÍAS</span>
             </div>
             <span className="text-[10px] italic text-zinc-400 -mt-0.5" style={{ fontFamily: 'Georgia, serif' }}>by confeccionarte</span>
           </div>
@@ -1838,7 +1838,7 @@ function Auditoria({ usuario, tema, setTema }) {
                     { nombre: 'Yaqueline Cano', cargo: 'Analista de Calidad', email: 'analista.calidad@crearte-sas.com' },
                     { nombre: 'Jasbleidy González', cargo: 'Producción', email: 'produccion.creartesas@gmail.com' },
                     { nombre: 'Walter Quintana', cargo: 'Dirección', email: 'walter.quintana@crearte-sas.com' },
-                    { nombre: 'Integración Crearte', cargo: 'Integración', email: 'integracion.crearte@gmail.com' },
+                    { nombre: 'Integración', cargo: 'Integración', email: 'integracion.crearte@gmail.com' },
                   ].map((c) => {
                     const sel = emailDestinatarios.includes(c.email);
                     return (
@@ -1970,7 +1970,7 @@ export default function App() {
         setUsuario(null);
         setEstadoAcceso("sin-permiso");
         setMensajeAcceso(
-          "Tu cuenta no tiene habilitado el acceso a Crearte. Solicita al administrador que active este aplicativo."
+          "Tu cuenta no tiene habilitado el acceso a Auditorías. Solicita al administrador que active este aplicativo."
         );
         setVerificandoAcceso(false);
         return;
@@ -1987,7 +1987,7 @@ export default function App() {
 
     } catch (error) {
       console.error(
-        "Error al validar el acceso a Crearte:",
+        "Error al validar el acceso a Auditorías:",
         error
       );
 
@@ -2041,7 +2041,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    document.title = "Crearte By Confeccionarte";
+    document.title = "Auditorías By Confeccionarte";
   }, []);
 
   useEffect(() => {
@@ -2058,7 +2058,7 @@ export default function App() {
         <div className="animate-spin rounded-full h-10 w-10 border-4 border-slate-200 border-t-yellow-500" />
 
         <p className="font-semibold">
-          Verificando acceso a Crearte...
+          Verificando acceso a Auditorías...
         </p>
       </div>
     );

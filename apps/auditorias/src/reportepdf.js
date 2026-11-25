@@ -91,8 +91,8 @@ export const nombreArchivoPdf = (registro) => {
 export async function generarPdfAuditoria(registro) {
   // Inicializa el documento, metadatos y fuentes estándar compatibles con pdf-lib.
   const pdf = await PDFDocument.create();
-  pdf.setTitle('Reporte de Auditoría - Crearte By Confeccionarte');
-  pdf.setAuthor('Crearte By Confeccionarte');
+  pdf.setTitle('Reporte de Auditoría - Auditorías By Confeccionarte');
+  pdf.setAuthor('Auditorías By Confeccionarte');
   const f = await pdf.embedFont(StandardFonts.Helvetica);
   const b = await pdf.embedFont(StandardFonts.HelveticaBold);
 
@@ -133,7 +133,7 @@ export async function generarPdfAuditoria(registro) {
     if (primera) {
       caja(0, PAGE_H - 66, PAGE_W, 66, C.indigoDark);
       caja(0, PAGE_H - 70, PAGE_W, 4, C.amarillo); // franja amarilla
-      texto('Crearte By Confeccionarte', M, PAGE_H - 30, { font: b, size: 19, col: C.white });
+      texto('Auditorías By Confeccionarte', M, PAGE_H - 30, { font: b, size: 19, col: C.white });
       texto('Reporte de Auditoría Final Confección', M, PAGE_H - 49, { size: 10.5, col: C.indigoSoft });
       textoDerecha(registro.fecha || '', PAGE_W - M, PAGE_H - 30, { size: 9, col: C.indigoSoft });
       textoDerecha(`Lote #${registro.loteNum || 'S/N'}`, PAGE_W - M, PAGE_H - 49, { font: b, size: 10.5, col: C.white });
@@ -141,7 +141,7 @@ export async function generarPdfAuditoria(registro) {
     } else {
       caja(0, PAGE_H - 28, PAGE_W, 28, C.indigoDark);
       caja(0, PAGE_H - 31, PAGE_W, 3, C.amarillo); // franja amarilla
-      texto('Crearte By Confeccionarte  ·  Reporte de auditoría (continuación)', M, PAGE_H - 18, { size: 9, col: C.white });
+      texto('Auditorías By Confeccionarte  ·  Reporte de auditoría (continuación)', M, PAGE_H - 18, { size: 9, col: C.white });
       y = PAGE_H - 31 - 18;
     }
   };
@@ -338,7 +338,7 @@ export async function generarPdfAuditoria(registro) {
     page = p;
     page.drawLine({ start: { x: M, y: 34 }, end: { x: PAGE_W - M, y: 34 }, thickness: 0.5, color: color(C.slate200) });
     texto(
-      ajustar(`Crearte By Confeccionarte  ·  Auditor: ${registro.auditor || '-'}  ·  ${registro.fecha || ''}`, f, 8, W - 90),
+      ajustar(`Auditorías By Confeccionarte  ·  Auditor: ${registro.auditor || '-'}  ·  ${registro.fecha || ''}`, f, 8, W - 90),
       M, 22, { size: 8, col: C.slate500 }
     );
     textoDerecha(`Página ${idx + 1} de ${paginas.length}`, PAGE_W - M, 22, { size: 8, col: C.slate500 });
