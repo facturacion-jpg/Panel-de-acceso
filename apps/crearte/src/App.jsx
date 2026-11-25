@@ -1075,41 +1075,42 @@ function Auditoria({ usuario, tema, setTema }) {
         </section>
 
         {/* Valores derivados de TABLA_I y AQL_PLANS; se actualizan con los parámetros del lote. */}
-        <section className="bg-slate-900 text-white rounded-2xl shadow-xl overflow-hidden border border-slate-800">
-          <div className="bg-slate-950 px-4 sm:px-6 py-4 border-b border-slate-800 flex justify-between items-center">
-            <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2">
-              <svg className="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        {/* La card sigue el tema: clara en modo claro y oscura en modo oscuro. */}
+        <section className="bg-white text-slate-800 rounded-2xl shadow-sm overflow-hidden border border-slate-200">
+          <div className="bg-slate-50/80 px-4 sm:px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+            <h2 className="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+              <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
               Plan de Muestreo
             </h2>
-            <span className="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full font-semibold">
+            <span className="text-xs bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1 rounded-full font-semibold">
               Cálculo Automático
             </span>
           </div>
 
           <div className="p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
-            <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
-              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Letra Código</p>
-              <p className="text-2xl font-black text-indigo-400">{planMuestreo.letra}</p>
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Letra Código</p>
+              <p className="text-2xl font-black text-indigo-700">{planMuestreo.letra}</p>
             </div>
-            <div className="bg-slate-800/80 p-4 rounded-xl border-2 border-indigo-500/50">
-              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Muestra (n)</p>
-              <p className="text-2xl font-black text-white">{planMuestreo.muestraTotal}</p>
+            <div className="bg-slate-50 p-4 rounded-xl border-2 border-indigo-400">
+              <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Muestra (n)</p>
+              <p className="text-2xl font-black text-slate-900">{planMuestreo.muestraTotal}</p>
             </div>
-            <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
-              <p className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-1">Ac Mayores</p>
-              <p className="text-2xl font-black text-emerald-400">{planMuestreo.acMayores}</p>
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <p className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider mb-1">Ac Mayores</p>
+              <p className="text-2xl font-black text-emerald-700">{planMuestreo.acMayores}</p>
             </div>
-            <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
-              <p className="text-[11px] font-bold text-rose-400 uppercase tracking-wider mb-1">Re Mayores</p>
-              <p className="text-2xl font-black text-rose-400">{planMuestreo.reMayores}</p>
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <p className="text-[11px] font-bold text-rose-700 uppercase tracking-wider mb-1">Re Mayores</p>
+              <p className="text-2xl font-black text-rose-700">{planMuestreo.reMayores}</p>
             </div>
-            <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
-              <p className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-1">Ac Menores</p>
-              <p className="text-2xl font-black text-emerald-400">{planMuestreo.acMenores}</p>
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <p className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider mb-1">Ac Menores</p>
+              <p className="text-2xl font-black text-emerald-700">{planMuestreo.acMenores}</p>
             </div>
-            <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
-              <p className="text-[11px] font-bold text-rose-400 uppercase tracking-wider mb-1">Re Menores</p>
-              <p className="text-2xl font-black text-rose-400">{planMuestreo.reMenores}</p>
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <p className="text-[11px] font-bold text-rose-700 uppercase tracking-wider mb-1">Re Menores</p>
+              <p className="text-2xl font-black text-rose-700">{planMuestreo.reMenores}</p>
             </div>
           </div>
         </section>
