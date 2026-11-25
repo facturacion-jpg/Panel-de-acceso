@@ -970,34 +970,18 @@ function Auditoria({ usuario, tema, setTema }) {
             )}
           </button>
 
-          {/* Botón de retorno al estilo de Tallas: solo icono y tooltip al pasar el cursor.
-              En Acompañamiento regresa a la auditoría; en la auditoría vuelve al panel. */}
-          {vista === 'acompanamiento' ? (
-            <button
-              type="button"
-              onClick={() => setVista('auditoria')}
-              data-tip="Volver a auditoría"
-              aria-label="Volver a auditoría"
-              className="inline-grid place-items-center w-10 h-10 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M10 16l-4-4 4-4M6 12h9" />
-              </svg>
-            </button>
-          ) : (
-            <a
-              href="/?retornoAplicativo=1"
-              data-tip="Volver al panel"
-              aria-label="Volver al panel"
-              className="inline-grid place-items-center w-10 h-10 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M10 16l-4-4 4-4M6 12h9" />
-              </svg>
-            </a>
-          )}
+          {/* Botón de retorno al estilo de Tallas: solo icono y tooltip al pasar el cursor. */}
+          <a
+            href="/?retornoAplicativo=1"
+            data-tip="Volver al panel"
+            aria-label="Volver al panel"
+            className="inline-grid place-items-center w-10 h-10 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M10 16l-4-4 4-4M6 12h9" />
+            </svg>
+          </a>
         </div>
       </header>
 
@@ -1007,6 +991,7 @@ function Auditoria({ usuario, tema, setTema }) {
           usuario={usuario}
           registros={acompanamientos}
           setRegistros={setAcompanamientos}
+          onVolver={() => setVista('auditoria')}
           triggerToast={triggerToast}
         />
       ) : (
