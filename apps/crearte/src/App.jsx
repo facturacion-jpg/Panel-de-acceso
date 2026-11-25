@@ -76,7 +76,7 @@ const normAql = (val) => {
 const STORAGE_KEY = (email) => `auditorias_textil_local_db:${String(email || '').trim().toLowerCase()}`;
 
 // Reúne el formulario de auditoría, su historial y las acciones para consultar y exportar registros.
-function Auditoria({ usuario }) {
+function Auditoria({ usuario, tema, setTema }) {
   // Estado del historial y de los paneles/avisos de la interfaz.
   const [historialAuditorias, setHistorialAuditorias] = useState([]);
   const claveHistorialLocal = STORAGE_KEY(usuario.email);
@@ -865,6 +865,22 @@ function Auditoria({ usuario }) {
               <span>Enviar Correo</span>
             </button>
           </div>
+
+          {/* Alterna entre modo claro y oscuro; la preferencia se guarda en este navegador. */}
+          <button
+            type="button"
+            onClick={() => setTema(tema === 'dark' ? 'light' : 'dark')}
+            title={tema === 'dark' ? 'Modo claro' : 'Modo oscuro'}
+            aria-label={tema === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'}
+            aria-pressed={tema === 'dark'}
+            className="inline-grid place-items-center w-9 h-9 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
+          >
+            {tema === 'dark' ? (
+              <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6l1.4 1.4m10 10l1.4 1.4m0-12.8l-1.4 1.4m-10 10L5.6 18.4M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9 9 0 1020.354 15.354z"/></svg>
+            )}
+          </button>
 
           <a
             href="/?retornoAplicativo=1"
@@ -1896,6 +1912,13 @@ function Auditoria({ usuario }) {
 
 
 export default function App() {
+  // El tema se recuerda entre recargas y se aplica al documento para que también
+  // cubra las pantallas de acceso y verificación.
+  const [tema, setTema] = useState(() => {
+    try { return localStorage.getItem('crearte:tema') === 'dark' ? 'dark' : 'light'; }
+    catch (_) { return 'light'; }
+  });
+
   const [usuario, setUsuario] = useState(null);
 
   const [verificandoAcceso, setVerificandoAcceso] =
@@ -2016,6 +2039,11 @@ export default function App() {
   useEffect(() => {
     document.title = "Crearte By Confeccionarte";
   }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = tema;
+    try { localStorage.setItem('crearte:tema', tema); } catch (_) {}
+  }, [tema]);
   useEffect(() => {
     if (estadoAcceso === "sin-sesion") window.location.replace("/");
   }, [estadoAcceso]);
@@ -2072,6 +2100,6 @@ export default function App() {
     );
   }
 
-  return <Auditoria usuario={usuario} />;
+  return <Auditoria usuario={usuario} tema={tema} setTema={setTema} />;
 }
 
