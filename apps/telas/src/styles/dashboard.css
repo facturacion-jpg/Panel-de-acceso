@@ -20,7 +20,7 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 4px;
   min-width: 240px;
 }
 
@@ -90,14 +90,13 @@
 }
 
 .topbar-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font: italic 800 26px Georgia, "Times New Roman", serif;
+  position: static;
+  margin-left: 24px;
+  text-align: left;
+  font: 800 26px Georgia, "Times New Roman", serif;
   letter-spacing: 1.8px;
   color: #171717;
   white-space: nowrap;
-  pointer-events: none;
 }
 
 .header-info-bar {
@@ -1547,7 +1546,7 @@ footer span {
 
   .brand {
     min-width: 0;
-    gap: 8px;
+    gap: 3px;
   }
 
   .brand-logo {
@@ -1571,9 +1570,10 @@ footer span {
     position: static;
     order: 3;
     width: 100%;
+    margin-left: 0;
     padding: 3px 0 9px;
     transform: none;
-    text-align: center;
+    text-align: left;
     font-size: 17px;
     letter-spacing: 1.5px;
   }

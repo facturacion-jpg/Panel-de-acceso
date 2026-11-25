@@ -16,11 +16,6 @@ export default function Header({
       <header className="topbar">
 
         <div className="brand">
-          <img
-            className="brand-logo"
-            src={`${import.meta.env.BASE_URL}crearte-logo.png`}
-            alt="Logo de Crearte"
-          />
           <div>
             <strong className="brand-name">
               <span className="brand-cre">CRE</span>
@@ -28,6 +23,11 @@ export default function Header({
             </strong>
             <span className="brand-byline">by confeccionarte</span>
           </div>
+          <img
+            className="brand-logo"
+            src={`${import.meta.env.BASE_URL}crearte-logo.png`}
+            alt="Logo de Crearte"
+          />
         </div>
 
         <div className="topbar-title">
