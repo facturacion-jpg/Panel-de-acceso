@@ -891,8 +891,6 @@ function Auditoria({ usuario, tema, setTema }) {
             <span className="hidden sm:inline">Volver al panel</span>
             <span className="sm:hidden">Panel</span>
           </a>
-
-          <span className="text-xs font-semibold text-slate-500">Modo local</span>
         </div>
       </header>
 
