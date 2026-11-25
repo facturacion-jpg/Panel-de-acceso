@@ -859,7 +859,7 @@ function Auditoria({ usuario, tema, setTema }) {
             <button
               type="button"
               onClick={() => setIsEmailModalOpen(true)}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-md shadow-indigo-200 cursor-pointer"
+              className="flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-slate-900 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm cursor-pointer"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
               <span>Enviar Correo</span>
@@ -873,7 +873,7 @@ function Auditoria({ usuario, tema, setTema }) {
             title={tema === 'dark' ? 'Modo claro' : 'Modo oscuro'}
             aria-label={tema === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'}
             aria-pressed={tema === 'dark'}
-            className="inline-grid place-items-center w-9 h-9 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
+            className="inline-grid place-items-center w-10 h-10 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
           >
             {tema === 'dark' ? (
               <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6l1.4 1.4m10 10l1.4 1.4m0-12.8l-1.4 1.4m-10 10L5.6 18.4M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
@@ -882,14 +882,17 @@ function Auditoria({ usuario, tema, setTema }) {
             )}
           </button>
 
+          {/* Botón de retorno al estilo de Tallas: solo icono y tooltip al pasar el cursor. */}
           <a
             href="/?retornoAplicativo=1"
-            aria-label="Volver al panel de aplicativos"
-            className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-slate-100 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-200 transition-colors whitespace-nowrap"
+            data-tip="Volver al panel"
+            aria-label="Volver al panel"
+            className="inline-grid place-items-center w-10 h-10 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
           >
-            <span aria-hidden="true">←</span>
-            <span className="hidden sm:inline">Volver al panel</span>
-            <span className="sm:hidden">Panel</span>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M10 16l-4-4 4-4M6 12h9" />
+            </svg>
           </a>
         </div>
       </header>
