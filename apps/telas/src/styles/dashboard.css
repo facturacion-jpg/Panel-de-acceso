@@ -20,7 +20,7 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 12px;
   min-width: 240px;
 }
 
@@ -1546,7 +1546,7 @@ footer span {
 
   .brand {
     min-width: 0;
-    gap: 3px;
+    gap: 8px;
   }
 
   .brand-logo {
