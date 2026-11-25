@@ -154,6 +154,9 @@ html[data-theme="dark"] .focus\:bg-white:focus { background-color: #1b1b1b !impo
 /* El botón amarillo conserva su fondo brillante, así que su texto debe seguir siendo oscuro. */
 html[data-theme="dark"] button.bg-yellow-400,
 html[data-theme="dark"] button.bg-yellow-500 { color: #0a0a0a !important; }
+/* Botones primarios (índigo = negro en claro): amarillo de marca con texto oscuro en oscuro. */
+html[data-theme="dark"] .bg-indigo-600 { background-color: #EAB308 !important; color: #0a0a0a !important; }
+html[data-theme="dark"] .hover\:bg-indigo-700:hover { background-color: #FACC15 !important; color: #0a0a0a !important; }
 html[data-theme="dark"] .hover\:text-indigo-600:hover,
 html[data-theme="dark"] .hover\:text-indigo-800:hover { color: #fde047 !important; }
 html[data-theme="dark"] .hover\:text-rose-600:hover { color: #fda4af !important; }
