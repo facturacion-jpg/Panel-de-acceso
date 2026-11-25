@@ -31,7 +31,7 @@ h1 { font-size: 1.5rem; margin: 8px 0 2px; letter-spacing: -0.01em; }
 .eyebrow { color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
 .admin-session { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: .88rem; }
 .admin-session { flex-wrap: wrap; justify-content: flex-end; }
-.admin-main-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.admin-main-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
 .admin-main-tabs button, .admin-main-tabs a { display: inline-flex; align-items: center; padding: 9px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--text); font: inherit; font-weight: 650; text-decoration: none; cursor: pointer; }
 .admin-main-tabs button.selected { border-color: var(--accent); background: var(--accent); color: var(--accent-text); }
 .theme-button {
