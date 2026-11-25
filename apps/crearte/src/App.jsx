@@ -910,8 +910,9 @@ function Auditoria({ usuario, tema, setTema }) {
         </div>
 
         {/* Los datos del lote y los parámetros seleccionados alimentan los cálculos AQL. */}
-        <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-          <div className="bg-slate-50/80 px-4 sm:px-6 py-3.5 border-b border-slate-200 flex justify-between items-center">
+        {/* Sin overflow-hidden: el desplegable de empresa debe poder salirse de la card. */}
+        <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-visible">
+          <div className="bg-slate-50/80 px-4 sm:px-6 py-3.5 border-b border-slate-200 rounded-t-2xl flex justify-between items-center">
             <h2 className="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
               Datos del Lote
@@ -949,7 +950,7 @@ function Auditoria({ usuario, tema, setTema }) {
                     ? EMPRESAS.filter(e => e.toLowerCase().includes(formData.empresa.toLowerCase()))
                     : EMPRESAS;
                   return filtradas.length > 0 ? (
-                    <ul className="absolute z-20 left-0 right-0 bg-white border border-slate-200 rounded-xl shadow-lg mt-1 overflow-hidden">
+                    <ul className="absolute z-30 left-0 right-0 bg-white border border-slate-200 rounded-xl shadow-lg mt-1 overflow-hidden">
                       {filtradas.map(emp => (
                         <li
                           key={emp}
