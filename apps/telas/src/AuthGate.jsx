@@ -53,17 +53,17 @@ export default function AuthGate({ children }) {
   }, [estado]);
 
   if (estado === 'verificando' || estado === 'ingreso') {
-    return <main style={estilos.fondo}><p>{estado === 'ingreso' ? 'Volviendo al portal para iniciar sesión…' : 'Verificando sesión…'}</p></main>;
+    return <main className="auth-screen" style={estilos.fondo}><p>{estado === 'ingreso' ? 'Volviendo al portal para iniciar sesión…' : 'Verificando sesión…'}</p></main>;
   }
 
   if (estado === 'permitido') {
     return children;
   }
 
-  return <main style={estilos.fondo}><section style={estilos.tarjeta}>
+  return <main className="auth-screen" style={estilos.fondo}><section className="auth-card" style={estilos.tarjeta}>
     <h1>Inspección de telas</h1>
     <p role="status">{mensaje}</p>
-    <a style={estilos.enlace} href="/?retornoAplicativo=1">Volver al portal</a>
+    <a className="auth-link" style={estilos.enlace} href="/?retornoAplicativo=1">Volver al portal</a>
   </section></main>;
 }
 

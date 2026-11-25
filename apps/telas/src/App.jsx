@@ -55,7 +55,6 @@ import { summarizePlanilla } from "./utils/planilla4Puntos.js";
 import "./styles/dashboard.css";
 import "./styles/inspection.css";
 import "./styles/planilla-4puntos.css";
-import "./styles/dark.css";
 
 const blankRolls = () =>
   Array.from({ length: 30 }, (_, i) => ({

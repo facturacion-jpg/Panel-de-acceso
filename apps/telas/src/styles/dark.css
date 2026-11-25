@@ -1,257 +1,412 @@
 /* Modo oscuro de Telas: mismo interruptor y paleta que Tallas y Auditorías.
-   Todas las reglas viven bajo html[data-theme="dark"], por lo que el modo claro
-   (por defecto) no se ve afectado. */
+   Generado desde los CSS de la app: todo fondo claro y todo texto oscuro
+   tiene su equivalente oscuro. El modo claro no se ve afectado. */
 
-html[data-theme="dark"] body,
-html[data-theme="dark"] .app-shell {
-  background: #111111;
-  color: #f5f5f5;
-}
+html[data-theme="dark"] .app-shell { background: #242424 }
+html[data-theme="dark"] .topbar { background: #242424 }
+html[data-theme="dark"] .brand-name .brand-arte { color: #e5e5e5 }
+html[data-theme="dark"] .brand .brand-byline { color: #e5e5e5 }
+html[data-theme="dark"] .header-center { color: #e5e5e5 }
+html[data-theme="dark"] .header-line { background: #262626 }
+html[data-theme="dark"] .topbar-title { color: #e5e5e5 }
+html[data-theme="dark"] .header-info-bar { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .header-info-bar strong { color: #e5e5e5 }
+html[data-theme="dark"] .header-info-bar .criteria-limit { color: #e5e5e5 }
+html[data-theme="dark"] .header-tools { color: #e5e5e5 }
+html[data-theme="dark"] .back-to-panel { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .back-to-panel:hover { background: #242424 }
+html[data-theme="dark"] .back-to-panel::after { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .header-tools .theme-toggle { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .header-tools .theme-toggle:hover { background: #242424 }
+html[data-theme="dark"] .notification-badge { background: #401a1c }
+html[data-theme="dark"] .notification-popover { background: #242424 }
+html[data-theme="dark"] .notification-heading strong { color: #e5e5e5 }
+html[data-theme="dark"] .notification-heading button { color: #e5e5e5 }
+html[data-theme="dark"] .notification-list { background: #262626 }
+html[data-theme="dark"] .notification-item { background: #242424 }
+html[data-theme="dark"] .notification-item strong { color: #e5e5e5 }
+html[data-theme="dark"] .notification-item span { color: #e5e5e5 }
+html[data-theme="dark"] .notification-item > button { background: #262626; color: #e5e5e5 }
+html[data-theme="dark"] .notifications-empty { color: #e5e5e5 }
+html[data-theme="dark"] .user-email { color: #e5e5e5 }
+html[data-theme="dark"] .eyebrow { color: #e5e5e5 }
+html[data-theme="dark"] .eyebrow svg { color: #ffd54a }
+html[data-theme="dark"] .intro-row h1 { color: #e5e5e5 }
+html[data-theme="dark"] .subtitle { color: #e5e5e5 }
+html[data-theme="dark"] .today-chip { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .today-chip b { color: #e5e5e5 }
+html[data-theme="dark"] .live-dot { background: #12362a }
+html[data-theme="dark"] .panel { background: #242424 }
+html[data-theme="dark"] .roll-launcher-icon { background: #3a300b; color: #e5e5e5 }
+html[data-theme="dark"] .roll-launcher-copy strong { color: #e5e5e5 }
+html[data-theme="dark"] .roll-launcher-copy small { color: #e5e5e5 }
+html[data-theme="dark"] .database-launcher-icon { background: #3a300b; color: #e5e5e5 }
+html[data-theme="dark"] .database-launcher strong { color: #e5e5e5 }
+html[data-theme="dark"] .database-launcher small { color: #e5e5e5 }
+html[data-theme="dark"] .roll-dialog { background: #242424 }
+html[data-theme="dark"] .roll-dialog-title h2 { color: #e5e5e5 }
+html[data-theme="dark"] .roll-dialog-title p { color: #e5e5e5 }
+html[data-theme="dark"] .roll-dialog-close { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .roll-dialog-close:hover { background: #262626; color: #e5e5e5 }
+html[data-theme="dark"] .roll-dialog-actions .roll-count { color: #e5e5e5 }
+html[data-theme="dark"] .roll-dialog-actions .button.secondary { background: #2e2e2e }
+html[data-theme="dark"] .roll-dialog-actions .button.secondary:hover { background: #2e2e2e }
+html[data-theme="dark"] .roll-dialog .roll-table th { color: #e5e5e5 }
+html[data-theme="dark"] .roll-dialog .roll-table td { color: #e5e5e5 }
+html[data-theme="dark"] .roll-dialog .roll-table input { color: #e5e5e5 }
+html[data-theme="dark"] .roll-dialog .roll-table input::placeholder { color: #e5e5e5 }
+html[data-theme="dark"] .roll-dialog .calculated-cell { color: #e5e5e5 !important }
+html[data-theme="dark"] .roll-dialog .decision.pending { color: #e5e5e5 }
+html[data-theme="dark"] .roll-dialog .table-note { color: #e5e5e5 }
+html[data-theme="dark"] .database-dialog { background: #242424 }
+html[data-theme="dark"] .database-heading h2 { color: #e5e5e5 }
+html[data-theme="dark"] .database-heading p { color: #e5e5e5 }
+html[data-theme="dark"] .database-icon-button { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .database-record { background: #242424 }
+html[data-theme="dark"] .database-record-main strong { color: #e5e5e5 }
+html[data-theme="dark"] .database-record-main span, .database-record-main small { color: #e5e5e5 }
+html[data-theme="dark"] .database-record-actions button { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .database-record-actions button:hover { background: #262626 }
+html[data-theme="dark"] .database-record-actions .delete-action { color: #ff9a9d }
+html[data-theme="dark"] .database-empty { color: #e5e5e5 }
+html[data-theme="dark"] .database-detail-grid > span { color: #e5e5e5 }
+html[data-theme="dark"] .database-detail-grid strong { color: #e5e5e5 }
+html[data-theme="dark"] .database-detail-table th, .database-detail-table td { color: #e5e5e5 }
+html[data-theme="dark"] .database-detail-table th { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .panel-heading { color: #e5e5e5 }
+html[data-theme="dark"] .panel-heading h3 { color: #e5e5e5 }
+html[data-theme="dark"] .panel-heading h3 svg { color: #e5e5e5 }
+html[data-theme="dark"] .panel-heading p { color: #e5e5e5 }
+html[data-theme="dark"] .panel-tag { background: #3a300b; color: #e5e5e5 }
+html[data-theme="dark"] .metric-card { background: #242424 }
+html[data-theme="dark"] .metric-icon.sage { background: #262626; color: #6fdca6 }
+html[data-theme="dark"] .metric-icon.green { background: #262626; color: #6fdca6 }
+html[data-theme="dark"] .metric-icon.rose { background: #242424; color: #ff9a9d }
+html[data-theme="dark"] .metric-icon.gold { background: #3a300b; color: #ffd54a }
+html[data-theme="dark"] .metric-card > span { color: #e5e5e5 }
+html[data-theme="dark"] .metric-card strong { color: #e5e5e5 }
+html[data-theme="dark"] .metric-card small { color: #e5e5e5 }
+html[data-theme="dark"] .section-heading h2 { color: #e5e5e5 }
+html[data-theme="dark"] .section-heading p { color: #e5e5e5 }
+html[data-theme="dark"] .section-icon { background: #3a300b; color: #e5e5e5 }
+html[data-theme="dark"] .roll-count { color: #e5e5e5 }
+html[data-theme="dark"] .button.secondary { background: #2e2e2e }
+html[data-theme="dark"] .button.ghost { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .panel-heading > svg { color: #e5e5e5 }
+html[data-theme="dark"] .empty-chart { color: #e5e5e5 }
+html[data-theme="dark"] .donut-center strong { color: #e5e5e5 }
+html[data-theme="dark"] .donut-center span { color: #e5e5e5 }
+html[data-theme="dark"] .legend > div { color: #e5e5e5 }
+html[data-theme="dark"] .legend b { color: #e5e5e5 }
+html[data-theme="dark"] .email-attachment { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .email-attachment-hint { color: #e5e5e5 }
+html[data-theme="dark"] .email-field { color: #e5e5e5 }
+html[data-theme="dark"] .email-field input, .email-field textarea { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .small-muted { color: #e5e5e5 }
+html[data-theme="dark"] .result-banner { background: #242424 }
+html[data-theme="dark"] .result-banner span { color: #e5e5e5 }
+html[data-theme="dark"] .result-banner strong { color: #e5e5e5 }
+html[data-theme="dark"] .result-banner strong.accepted { color: #6fdca6 }
+html[data-theme="dark"] .result-banner strong.rejected { color: #ff9a9d }
+html[data-theme="dark"] .result-banner small { color: #e5e5e5 }
+html[data-theme="dark"] .form-message.error { background: #242424; color: #ff9a9d }
+html[data-theme="dark"] .form-message.success { background: #242424; color: #6fdca6 }
+html[data-theme="dark"] .help-dialog { background: #242424 }
+html[data-theme="dark"] .help-dialog-header h2 { color: #e5e5e5 }
+html[data-theme="dark"] .help-dialog-header p { color: #e5e5e5 }
+html[data-theme="dark"] .help-steps { color: #e5e5e5 }
+html[data-theme="dark"] .help-steps strong { color: #e5e5e5 }
+html[data-theme="dark"] .help-criteria { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .help-criteria strong { color: #e5e5e5 }
+html[data-theme="dark"] .saved-note { color: #e5e5e5 }
+html[data-theme="dark"] footer { color: #e5e5e5 }
+html[data-theme="dark"] .inspection-tools-heading h2 { color: #e5e5e5 }
+html[data-theme="dark"] .inspection-tool-card { background: #242424 }
+html[data-theme="dark"] .inspection-tool-icon { background: #242424; color: #9fc0f0 }
+html[data-theme="dark"] .inspection-tool-card strong { color: #9fc0f0 }
+html[data-theme="dark"] .inspection-tool-action { color: #9fc0f0 }
+html[data-theme="dark"] .standards-tool { background: linear-gradient(145deg, #242424 0%, #242424 100%) }
+html[data-theme="dark"] .tests-tool { background: linear-gradient(145deg, #242424 0%, #242424 100%) }
+html[data-theme="dark"] .tests-tool .inspection-tool-icon { background: #262626; color: #6fdca6 }
+html[data-theme="dark"] .tests-tool .inspection-tool-action { color: #6fdca6 }
+html[data-theme="dark"] .planilla-tool { background: linear-gradient(145deg, #242424 0%, #242424 100%) }
+html[data-theme="dark"] .planilla-tool .inspection-tool-icon { background: #262626; color: #ffd54a }
+html[data-theme="dark"] .planilla-tool .inspection-tool-action { color: #ffd54a }
+html[data-theme="dark"] .ft-tab { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .ft-tab span { background: #262626; color: #e5e5e5 }
+html[data-theme="dark"] .ft-tab em { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .ft-tab:hover { background: #242424 }
+html[data-theme="dark"] .ft-tab.active { background: #3a300b; color: #e5e5e5 }
+html[data-theme="dark"] .ft-tab.active span { background: #3a300b }
+html[data-theme="dark"] .ft-card { background: #242424 }
+html[data-theme="dark"] .ft-card h3 { color: #e5e5e5 }
+html[data-theme="dark"] .ft-card-note { color: #e5e5e5 }
+html[data-theme="dark"] .ft-readonly dt { color: #e5e5e5 }
+html[data-theme="dark"] .ft-readonly dd { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .ft-field > span { color: #e5e5e5 }
+html[data-theme="dark"] .ft-field input, .ft-field select, .ft-table input, .ft-table select { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .ft-table thead th { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .ft-table td, .ft-table tbody th { color: #e5e5e5 }
+html[data-theme="dark"] .ft-condition { background: #242424; color: #e5e5e5 !important }
+html[data-theme="dark"] .ft-parameter { color: #e5e5e5 }
+html[data-theme="dark"] .ft-unit { color: #e5e5e5 !important }
+html[data-theme="dark"] .ft-applies.yes { background: #262626; color: #6fdca6 }
+html[data-theme="dark"] .ft-applies.no { background: #262626; color: #ff9a9d }
+html[data-theme="dark"] .ft-table input:disabled { background: #262626 }
+html[data-theme="dark"] .ft-calculated { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .ft-suggested { color: #e5e5e5 !important }
+html[data-theme="dark"] .ft-result { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .ft-result.acepta { background: #262626; color: #6fdca6 }
+html[data-theme="dark"] .ft-result.rechaza { background: #242424; color: #ff9a9d }
+html[data-theme="dark"] .ft-result.sin-estandar { background: #262626; color: #ffd54a }
+html[data-theme="dark"] .ft-result.sin-dato { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .ft-section-card { background: #242424 }
+html[data-theme="dark"] .ft-section-card--second { background: #242424 }
+html[data-theme="dark"] .ft-section-heading h3 { color: #e5e5e5 }
+html[data-theme="dark"] .ft-standard-fields .ft-field span { color: #e5e5e5 }
+html[data-theme="dark"] .ft-table-scroll { background: #242424 }
+html[data-theme="dark"] .ft-condition-cell { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .ft-parameter-cell { color: #e5e5e5 }
+html[data-theme="dark"] .ft-calculated-limit { color: #e5e5e5 }
+html[data-theme="dark"] .ft-inline-stats b { color: #e5e5e5 }
+html[data-theme="dark"] .ft-result-summary > div { background: #242424 }
+html[data-theme="dark"] .ft-result-summary strong { color: #9fc0f0 }
+html[data-theme="dark"] .ft-result-summary .ft-good { color: #6fdca6 }
+html[data-theme="dark"] .ft-status { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .ft-status.acepta { background: #262626; color: #6fdca6 }
+html[data-theme="dark"] .ft-status.rechaza { background: #242424; color: #ff9a9d }
+html[data-theme="dark"] .ft-status.sin-estándar { background: #242424; color: #ffd54a }
+html[data-theme="dark"] .ft-status.sin-dato { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .ft-results-meta > div, .ft-results-meta > label { background: #242424 }
+html[data-theme="dark"] .ft-results-meta strong { color: #e5e5e5 }
+html[data-theme="dark"] .ft-existing-field { background: #242424 }
+html[data-theme="dark"] .ft-existing-field span { color: #e5e5e5 }
+html[data-theme="dark"] .ft-existing-field strong { color: #9fc0f0 }
+html[data-theme="dark"] .ft-metadata-fields input, .ft-base-fields input { background: #3a300b }
+html[data-theme="dark"] .ft-standards-table thead th { background: #3a300b; color: #e5e5e5 }
+html[data-theme="dark"] .ft-standards-table tbody td, .ft-standards-table tbody th { color: #e5e5e5 }
+html[data-theme="dark"] .ft-standards-table tbody tr:nth-child(even) td, .ft-standards-table tbody tr:nth-child(even) th { background: #242424 }
+html[data-theme="dark"] .ft-standards-table .ft-row-number { color: #ffd54a }
+html[data-theme="dark"] .ft-standards-table .ft-condition-cell { background: #3a300b; color: #e5e5e5 }
+html[data-theme="dark"] .ft-standards-table .ft-parameter-cell { color: #e5e5e5 }
+html[data-theme="dark"] .ft-standards-table .ft-applies-select { background: #3a300b; color: #e5e5e5 }
+html[data-theme="dark"] .ft-standards-table input[type="number"] { background: #3a300b }
+html[data-theme="dark"] .ft-standards-table .ft-calculated-limit { color: #e5e5e5 }
+html[data-theme="dark"] .ft-standards-table .ft-suggested-cell { color: #e5e5e5 }
+html[data-theme="dark"] .fd-verdict { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .fd-verdict.released { background: #262626; color: #6fdca6 }
+html[data-theme="dark"] .fd-verdict.rejected { background: #242424; color: #ff9a9d }
+html[data-theme="dark"] .fd-verdict.missing-standard, .fd-verdict.pending { background: #262626; color: #ffd54a }
+html[data-theme="dark"] .fd-block { background: #242424 }
+html[data-theme="dark"] .fd-block h4 { color: #e5e5e5 }
+html[data-theme="dark"] .fd-table th { background: #2e2e2e }
+html[data-theme="dark"] .fd-table td strong { color: #e5e5e5 }
+html[data-theme="dark"] .fd-table td small { color: #e5e5e5 }
+html[data-theme="dark"] .fd-status { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .fd-status.acepta, .fd-status.ok { background: #262626; color: #6fdca6 }
+html[data-theme="dark"] .fd-status.rechaza { background: #242424; color: #ff9a9d }
+html[data-theme="dark"] .fd-status.sin-estandar, .fd-status.sin-dato, .fd-status.pendiente { background: #262626; color: #ffd54a }
+html[data-theme="dark"] .fd-status.n-a { background: #262626; color: #e5e5e5 }
+html[data-theme="dark"] .fd-list li { background: #242424 }
+html[data-theme="dark"] .fd-list li strong { color: #e5e5e5 }
+html[data-theme="dark"] .fd-list li small { color: #e5e5e5 }
+html[data-theme="dark"] .fd-list li > span { color: #e5e5e5 }
+html[data-theme="dark"] .fd-empty, .fd-more { color: #e5e5e5 }
+html[data-theme="dark"] .field > span { color: #e5e5e5 }
+html[data-theme="dark"] .field > span svg { color: #e5e5e5 }
+html[data-theme="dark"] .field input, .field select { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .master-options { background: #242424 }
+html[data-theme="dark"] .master-options button { color: #e5e5e5 }
+html[data-theme="dark"] .master-options button:hover, .master-options button.is-active { background: #3a300b; color: #e5e5e5 }
+html[data-theme="dark"] .master-options::-webkit-scrollbar-thumb { background: #262626 }
+html[data-theme="dark"] .master-empty { color: #e5e5e5 }
+html[data-theme="dark"] .master-note { color: #e5e5e5 }
+html[data-theme="dark"] .master-warning { color: #ffd54a }
+html[data-theme="dark"] .master-details { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .master-details small { color: #e5e5e5 }
+html[data-theme="dark"] .form-footnote { color: #e5e5e5 }
+html[data-theme="dark"] .roll-table th { background: #262626; color: #e5e5e5 }
+html[data-theme="dark"] .roll-table td { color: #e5e5e5 }
+html[data-theme="dark"] .roll-table tbody tr:hover { background: #242424 }
+html[data-theme="dark"] .roll-number { color: #e5e5e5 !important }
+html[data-theme="dark"] .roll-table input { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .roll-table .roll-id-input { color: #e5e5e5 }
+html[data-theme="dark"] .roll-table .roll-color-input { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .roll-table input::placeholder { color: #e5e5e5 }
+html[data-theme="dark"] .calculated-cell { background: #242424; color: #e5e5e5 !important }
+html[data-theme="dark"] .decision.accepted { background: #262626; color: #6fdca6 }
+html[data-theme="dark"] .decision.rejected { background: #242424; color: #ff9a9d }
+html[data-theme="dark"] .decision.pending { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .table-note { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .p4-table-toggle { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .p4-field, .p4-metric, .p4-result { background: #242424 }
+html[data-theme="dark"] .p4-field span, .p4-metric small, .p4-result small { color: #e5e5e5 }
+html[data-theme="dark"] .p4-field input { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .p4-metric strong { color: #e5e5e5 }
+html[data-theme="dark"] .p4-result strong { color: #e5e5e5 }
+html[data-theme="dark"] .p4-result.rechaza strong { color: #ff9a9d }
+html[data-theme="dark"] .p4-result.acepta strong { color: #6fdca6 }
+html[data-theme="dark"] .p4-result.sin-estandar strong, .p4-result.sin-dato strong { color: #ffd54a }
+html[data-theme="dark"] .p4-standard-note { background: #242424 }
+html[data-theme="dark"] .p4-standard-note strong { color: #9fc0f0 }
+html[data-theme="dark"] .p4-readonly-standard { background: #242424 }
+html[data-theme="dark"] .p4-readonly-standard strong { color: #e5e5e5 }
+html[data-theme="dark"] .p4-actions > span { color: #e5e5e5 }
+html[data-theme="dark"] .p4-table-wrap { background: #242424 }
+html[data-theme="dark"] .p4-table th { background: #3a300b; color: #e5e5e5 }
+html[data-theme="dark"] .p4-table tbody tr:nth-child(even) td { background-color: #242424 }
+html[data-theme="dark"] .p4-table tbody tr:hover td { background-color: #242424 }
+html[data-theme="dark"] .p4-table td:first-child { background: #242424 }
+html[data-theme="dark"] .p4-table tbody tr:nth-child(even) td:first-child { background: #242424 }
+html[data-theme="dark"] .p4-table tbody tr:hover td:first-child { background: #242424 }
+html[data-theme="dark"] .p4-table input { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .p4-calculated { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .p4-status { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .p4-status.acepta { background: #262626; color: #6fdca6 }
+html[data-theme="dark"] .p4-status.rechaza { background: #242424; color: #ff9a9d }
+html[data-theme="dark"] .p4-status.sin-estandar { background: #262626; color: #ffd54a }
+html[data-theme="dark"] .p4-status.pending { background: #242424; color: #e5e5e5 }
+html[data-theme="dark"] .p4-footnote { color: #e5e5e5 }
 
-/* Encabezado */
-html[data-theme="dark"] .topbar {
-  background: #1c1c1c;
-  border-bottom-color: #ffd54a;
-}
-
-html[data-theme="dark"] .brand-name .brand-arte,
-html[data-theme="dark"] .topbar-title {
-  color: #f5f5f5;
-}
-
-html[data-theme="dark"] .brand .brand-byline {
-  color: #c2c2c2;
-}
-
-html[data-theme="dark"] .header-tools {
-  color: #e5e5e5;
-}
-
-html[data-theme="dark"] .header-info-bar {
-  background: #242018;
-  border-bottom-color: #4a3f18;
-  color: #e5e5e5;
-}
-
-html[data-theme="dark"] .header-info-bar strong {
-  color: #ffd54a;
-}
-
-html[data-theme="dark"] .criteria-limit {
-  background: #403711;
-  color: #ffd54a;
-}
-
-html[data-theme="dark"] .back-to-panel,
-html[data-theme="dark"] .header-tools .theme-toggle {
-  border-color: #454545;
-  background: #242424;
-  color: #f5f5f5;
-}
-
-html[data-theme="dark"] .back-to-panel:hover,
-html[data-theme="dark"] .header-tools .theme-toggle:hover {
-  background: #403711;
-  border-color: #ffd54a;
-  color: #ffd54a;
-}
-
-html[data-theme="dark"] .back-to-panel::after {
-  border-color: #454545;
-  background: #1b1b1b;
-  color: #e5e5e5;
-}
-
-html[data-theme="dark"] .notification-popover {
-  background: #1f1f1f;
-  border-color: #454545;
-}
-
-html[data-theme="dark"] .notification-item {
-  background: #262626;
-  border-color: #454545;
-  color: #e5e5e5;
-}
-
-/* Superficies generales */
+/* Bordes: se conserva el contraste sin líneas claras */
+html[data-theme="dark"] .header-info-bar { border-bottom: 1px solid #454545 }
+html[data-theme="dark"] .back-to-panel { border: 1px solid #454545 }
+html[data-theme="dark"] .back-to-panel:hover { border-color: #6b5a1f }
+html[data-theme="dark"] .back-to-panel::after { border: 1px solid #454545 }
+html[data-theme="dark"] .header-tools .theme-toggle { border: 1px solid #454545 }
+html[data-theme="dark"] .header-tools .theme-toggle:hover { border-color: #6b5a1f }
+html[data-theme="dark"] .notification-badge { border: 2px solid #454545 }
+html[data-theme="dark"] .notification-popover { border: 1px solid #454545 }
+html[data-theme="dark"] .notification-heading { border-bottom: 1px solid #454545 }
+html[data-theme="dark"] .today-chip { border: 1px solid #454545 }
+html[data-theme="dark"] .panel { border: 1px solid #454545 }
+html[data-theme="dark"] .roll-launcher:hover { border-color: #454545 }
+html[data-theme="dark"] .database-launcher:hover { border-color: #454545 }
+html[data-theme="dark"] .roll-dialog { border: 1px solid #454545 }
+html[data-theme="dark"] .roll-dialog-close { border: 1px solid #454545 }
+html[data-theme="dark"] .database-dialog { border: 1px solid #454545 }
+html[data-theme="dark"] .database-header { border-bottom: 1px solid #454545 }
+html[data-theme="dark"] .database-icon-button { border: 1px solid #454545 }
+html[data-theme="dark"] .database-record { border: 1px solid #454545 }
+html[data-theme="dark"] .database-record-actions button { border: 1px solid #454545 }
+html[data-theme="dark"] .database-detail-table { border: 1px solid #454545 }
+html[data-theme="dark"] .database-detail-table th, .database-detail-table td { border-bottom: 1px solid #454545 }
+html[data-theme="dark"] .database-roll-color-swatch { border: 1px solid #454545 }
+html[data-theme="dark"] .metric-card { border: 1px solid #454545 }
+html[data-theme="dark"] .button.ghost { border: 1px solid #454545 }
+html[data-theme="dark"] .email-attachment { border: 1px solid #454545 }
+html[data-theme="dark"] .email-field input, .email-field textarea { border: 1px solid #454545 }
+html[data-theme="dark"] .email-field input:focus, .email-field textarea:focus { border-color: #2f5a46 }
+html[data-theme="dark"] .form-message.error { border: 1px solid #5a3033 }
+html[data-theme="dark"] .form-message.success { border: 1px solid #2f5a46 }
+html[data-theme="dark"] .help-dialog { border: 1px solid #454545 }
+html[data-theme="dark"] .inspection-tool-card { border: 1px solid #454545 }
+html[data-theme="dark"] .inspection-tool-card:hover { border-color: #33415a }
+html[data-theme="dark"] .ft-tabs { border-bottom: 1px solid #454545 }
+html[data-theme="dark"] .ft-tab { border: 1px solid #454545 }
+html[data-theme="dark"] .ft-card { border: 1px solid #454545 }
+html[data-theme="dark"] .ft-field input, .ft-field select, .ft-table input, .ft-table select { border: 1px solid #454545 }
+html[data-theme="dark"] .ft-table td, .ft-table tbody th { border-bottom: 1px solid #454545 }
+html[data-theme="dark"] .ft-table tr.ft-group-start td, .ft-table tr.ft-group-start th { border-top: 2px solid #454545 }
+html[data-theme="dark"] .ft-condition { border-right: 1px solid #454545 }
+html[data-theme="dark"] .ft-applies.yes { border-color: #2f5a46 }
+html[data-theme="dark"] .ft-applies.no { border-color: #5a3033 }
+html[data-theme="dark"] .ft-section-card { border: 1px solid #454545 }
+html[data-theme="dark"] .ft-section-card--second { border-color: #33415a }
+html[data-theme="dark"] .ft-table-scroll { border: 1px solid #454545 }
+html[data-theme="dark"] .ft-table th, .ft-table td { border-bottom: 1px solid #454545 }
+html[data-theme="dark"] .ft-group-start td, .ft-group-start th { border-top: 2px solid #454545 }
+html[data-theme="dark"] .ft-result-summary > div { border: 1px solid #454545 }
+html[data-theme="dark"] .ft-results-meta > div, .ft-results-meta > label { border: 1px solid #454545 }
+html[data-theme="dark"] .ft-dialog-footer { border-top: 1px solid #454545 }
+html[data-theme="dark"] .ft-existing-field { border: 1px solid #454545 }
+html[data-theme="dark"] .ft-metadata-fields input, .ft-base-fields input { border-color: #6b5a1f }
+html[data-theme="dark"] .ft-standards-table tbody td, .ft-standards-table tbody th { border-right: 1px solid #454545; border-bottom-color: #454545 }
+html[data-theme="dark"] .ft-standards-table .ft-applies-select { border: 1px solid #6b5a1f }
+html[data-theme="dark"] .ft-standards-table input[type="number"] { border-color: #6b5a1f }
+html[data-theme="dark"] .fd-verdict { border: 1px solid #454545 }
+html[data-theme="dark"] .fd-verdict.released { border-color: #2f5a46 }
+html[data-theme="dark"] .fd-verdict.rejected { border-color: #5a3033 }
+html[data-theme="dark"] .fd-verdict.missing-standard, .fd-verdict.pending { border-color: #454545 }
+html[data-theme="dark"] .fd-block { border: 1px solid #454545 }
+html[data-theme="dark"] .fd-table td { border-bottom: 1px solid #454545 }
+html[data-theme="dark"] .fd-list li { border: 1px solid #5a3033 }
+html[data-theme="dark"] .field input, .field select { border: 1px solid #454545 }
+html[data-theme="dark"] .master-options { border: 1px solid #454545 }
+html[data-theme="dark"] .master-details { border: 1px solid #454545 }
+html[data-theme="dark"] .form-footnote { border-top: 1px solid #454545 }
+html[data-theme="dark"] .roll-table th { border-bottom: 1px solid #454545 }
+html[data-theme="dark"] .roll-table td { border-bottom: 1px solid #454545 }
+html[data-theme="dark"] .roll-table input { border: 1px solid #454545 }
+html[data-theme="dark"] .roll-table .roll-color-input { border: 1px solid #454545 }
+html[data-theme="dark"] .p4-table-toggle { border: 1px solid #454545 }
+html[data-theme="dark"] .p4-field, .p4-metric, .p4-result { border: 1px solid #454545 }
+html[data-theme="dark"] .p4-field input { border: 1px solid #454545 }
+html[data-theme="dark"] .p4-standard-note { border: 1px solid #33415a }
+html[data-theme="dark"] .p4-readonly-standard { border: 1px solid #454545 }
+html[data-theme="dark"] .p4-table-wrap { border: 1px solid #454545 }
+html[data-theme="dark"] .p4-table td { border-bottom: 1px solid #454545 }
+html[data-theme="dark"] .p4-table input { border: 1px solid #454545 }
+/* Base y raíz: misma paleta que Tallas y Auditorías */
+html[data-theme="dark"]:root { background: #111111; color: #f5f5f5; color-scheme: dark; }
+html[data-theme="dark"] body { background: #111111; color: #f5f5f5; }
+html[data-theme="dark"] .app-shell { background: #111111; }
+html[data-theme="dark"] .topbar { background: #1c1c1c; border-bottom-color: #ffd54a; }
+html[data-theme="dark"] .header-info-bar { background: #242018; border-bottom-color: #4a3f18; }
 html[data-theme="dark"] .panel,
 html[data-theme="dark"] .metric-card,
-html[data-theme="dark"] .inspection-form,
-html[data-theme="dark"] .table-panel,
-html[data-theme="dark"] .database-dialog,
 html[data-theme="dark"] .roll-dialog,
+html[data-theme="dark"] .database-dialog,
 html[data-theme="dark"] .p4-dialog,
 html[data-theme="dark"] .ft-dialog,
-html[data-theme="dark"] .ft-standards-dialog,
-html[data-theme="dark"] .ft-results-dialog,
 html[data-theme="dark"] .ft-section-card,
-html[data-theme="dark"] .master-options {
-  background: #1c1c1c;
-  border-color: #383838;
-  color: #e5e5e5;
-}
+html[data-theme="dark"] .help-dialog,
+html[data-theme="dark"] .inspection-tool-card { background: #1c1c1c; }
 
-html[data-theme="dark"] h1,
-html[data-theme="dark"] h2,
-html[data-theme="dark"] h3,
-html[data-theme="dark"] h4,
-html[data-theme="dark"] .intro-row h1,
-html[data-theme="dark"] .panel-heading h3,
-html[data-theme="dark"] .section-heading h2,
-html[data-theme="dark"] .roll-dialog-title h2,
-html[data-theme="dark"] .metric-card strong {
-  color: #f5f5f5;
-}
-
-html[data-theme="dark"] p,
-html[data-theme="dark"] small,
-html[data-theme="dark"] .panel-heading p,
-html[data-theme="dark"] .section-heading p,
-html[data-theme="dark"] .master-note,
-html[data-theme="dark"] .metric-card > span,
-html[data-theme="dark"] .metric-card small,
-html[data-theme="dark"] .roll-dialog-title p,
-html[data-theme="dark"] .table-note,
-html[data-theme="dark"] .p4-footnote {
-  color: #c2c2c2;
-}
-
-/* Campos y desplegables */
+/* Bordes y estados interactivos */
+html[data-theme="dark"] .back-to-panel,
+html[data-theme="dark"] .header-tools .theme-toggle,
 html[data-theme="dark"] .field input,
 html[data-theme="dark"] .field select,
 html[data-theme="dark"] input,
 html[data-theme="dark"] select,
-html[data-theme="dark"] textarea {
-  background: #262626;
-  border-color: #454545;
-  color: #f5f5f5;
-}
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] .master-options,
+html[data-theme="dark"] .panel,
+html[data-theme="dark"] .metric-card { border-color: #454545; }
 
-html[data-theme="dark"] input::placeholder,
-html[data-theme="dark"] textarea::placeholder {
-  color: #8f8f8f;
-}
+html[data-theme="dark"] .back-to-panel:hover,
+html[data-theme="dark"] .header-tools .theme-toggle:hover { background: #403711; border-color: #ffd54a; color: #ffd54a; }
 
-html[data-theme="dark"] .field input:focus,
-html[data-theme="dark"] .field select:focus,
-html[data-theme="dark"] input:focus,
-html[data-theme="dark"] textarea:focus {
-  border-color: #ffd54a;
-  box-shadow: 0 0 0 3px #403711;
-}
+html[data-theme="dark"] .back-to-panel::after { border-color: #454545; color: #e5e5e5; }
+html[data-theme="dark"] .brand-name .brand-cre { color: #ffd54a; }
+html[data-theme="dark"] .avatar { background: #f2c400; color: #171717; }
+html[data-theme="dark"] .button.primary,
+html[data-theme="dark"] .roll-dialog-actions .button.primary { background: #ffd54a; color: #111111; }
 
-html[data-theme="dark"] .master-options button {
-  color: #e5e5e5;
-}
+/* Botones-tarjeta y campos dorados: evita texto negro heredado sobre fondo oscuro */
+html[data-theme="dark"] .roll-launcher,
+html[data-theme="dark"] .database-launcher,
+html[data-theme="dark"] .inspection-tool-card { color: #e5e5e5; }
+html[data-theme="dark"] .roll-launcher-copy,
+html[data-theme="dark"] .roll-launcher-action { color: #e5e5e5; }
+html[data-theme="dark"] .ft-metadata-fields input,
+html[data-theme="dark"] .ft-base-fields input,
+html[data-theme="dark"] .ft-standards-table input[type="number"],
+html[data-theme="dark"] .ft-standards-table .ft-applies-select { color: #e5e5e5; }
 
-html[data-theme="dark"] .master-options button:hover,
-html[data-theme="dark"] .master-options button.is-active {
-  background: #403711;
-  color: #ffd54a;
-}
+/* Pantalla de acceso y espera (AuthGate) */
+html[data-theme="dark"] .auth-screen { background: #111111 !important; color: #f5f5f5 !important; }
+html[data-theme="dark"] .auth-card { background: #1c1c1c !important; border-color: #454545 !important; box-shadow: none !important; }
+html[data-theme="dark"] .auth-link { color: #ffd54a !important; }
 
-/* Tablas */
-html[data-theme="dark"] table,
-html[data-theme="dark"] th,
-html[data-theme="dark"] td {
-  border-color: #383838;
-  color: #e5e5e5;
-}
-
-html[data-theme="dark"] th,
-html[data-theme="dark"] thead {
-  background: #262626;
-  color: #f5f5f5;
-}
-
-html[data-theme="dark"] tbody tr:nth-child(even) td,
-html[data-theme="dark"] tbody tr:nth-child(even) th {
-  background: #222222;
-}
-
-html[data-theme="dark"] tbody tr:hover td {
-  background: #2e2e2e;
-}
-
-/* Botones: se mantiene el amarillo de marca para el primario */
-html[data-theme="dark"] .button.ghost,
-html[data-theme="dark"] .button.secondary {
-  background: #2e2e2e;
-  border-color: #454545;
-  color: #e5e5e5;
-}
-
-html[data-theme="dark"] .button.primary {
-  background: #ffd54a;
-  color: #111111;
-}
-
-html[data-theme="dark"] .button.primary:hover {
-  background: #f2c400;
-}
-
-/* Estados y avisos */
-html[data-theme="dark"] .result-banner,
-html[data-theme="dark"] .fd-verdict,
-html[data-theme="dark"] .p4-standard-note,
-html[data-theme="dark"] .p4-readonly-standard {
-  background: #262626;
-  border-color: #454545;
-  color: #e5e5e5;
-}
-
-html[data-theme="dark"] .fd-block {
-  border-color: #383838;
-}
-
-html[data-theme="dark"] .fd-status,
-html[data-theme="dark"] .p4-status {
-  background: #2e2e2e;
-  color: #e5e5e5;
-}
-
-html[data-theme="dark"] .fd-status.acepta,
-html[data-theme="dark"] .fd-status.ok,
-html[data-theme="dark"] .p4-status.acepta {
-  background: #12362a;
-  color: #6fdca6;
-}
-
-html[data-theme="dark"] .fd-status.rechaza,
-html[data-theme="dark"] .p4-status.rechaza {
-  background: #401a1c;
-  color: #ff9a9d;
-}
-
-html[data-theme="dark"] .fd-status.sin-estandar,
-html[data-theme="dark"] .fd-status.sin-dato,
-html[data-theme="dark"] .fd-status.pendiente,
-html[data-theme="dark"] .p4-status.sin-estandar,
-html[data-theme="dark"] .p4-status.pending {
-  background: #3a300b;
-  color: #ffd54a;
-}
-
-html[data-theme="dark"] .decision.pending,
-html[data-theme="dark"] .p4-calculated {
-  color: #ffd54a;
-}
-
-/* Barras de desplazamiento */
-html[data-theme="dark"] ::-webkit-scrollbar-track {
-  background: #141414;
-}
-
-html[data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: #4a4a4a;
-  border-radius: 8px;
-}
+/* Gráficos (Recharts pinta con atributos SVG) */
+html[data-theme="dark"] .recharts-text { fill: #c2c2c2 !important; }
+html[data-theme="dark"] .recharts-cartesian-grid line { stroke: #454545 !important; }
+html[data-theme="dark"] .notification-badge { border-color: #242424; }
 
 /* Impresión: se conserva el fondo claro */
 @media print {
   html[data-theme="dark"] body,
-  html[data-theme="dark"] .app-shell {
-    background: #fff;
-    color: #000;
-  }
+  html[data-theme="dark"] .app-shell { background: #fff !important; color: #000 !important; }
 }
