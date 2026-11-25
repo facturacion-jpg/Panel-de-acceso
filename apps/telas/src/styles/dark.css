@@ -1,0 +1,257 @@
+/* Modo oscuro de Telas: mismo interruptor y paleta que Tallas y Auditorías.
+   Todas las reglas viven bajo html[data-theme="dark"], por lo que el modo claro
+   (por defecto) no se ve afectado. */
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] .app-shell {
+  background: #111111;
+  color: #f5f5f5;
+}
+
+/* Encabezado */
+html[data-theme="dark"] .topbar {
+  background: #1c1c1c;
+  border-bottom-color: #ffd54a;
+}
+
+html[data-theme="dark"] .brand-name .brand-arte,
+html[data-theme="dark"] .topbar-title {
+  color: #f5f5f5;
+}
+
+html[data-theme="dark"] .brand .brand-byline {
+  color: #c2c2c2;
+}
+
+html[data-theme="dark"] .header-tools {
+  color: #e5e5e5;
+}
+
+html[data-theme="dark"] .header-info-bar {
+  background: #242018;
+  border-bottom-color: #4a3f18;
+  color: #e5e5e5;
+}
+
+html[data-theme="dark"] .header-info-bar strong {
+  color: #ffd54a;
+}
+
+html[data-theme="dark"] .criteria-limit {
+  background: #403711;
+  color: #ffd54a;
+}
+
+html[data-theme="dark"] .back-to-panel,
+html[data-theme="dark"] .header-tools .theme-toggle {
+  border-color: #454545;
+  background: #242424;
+  color: #f5f5f5;
+}
+
+html[data-theme="dark"] .back-to-panel:hover,
+html[data-theme="dark"] .header-tools .theme-toggle:hover {
+  background: #403711;
+  border-color: #ffd54a;
+  color: #ffd54a;
+}
+
+html[data-theme="dark"] .back-to-panel::after {
+  border-color: #454545;
+  background: #1b1b1b;
+  color: #e5e5e5;
+}
+
+html[data-theme="dark"] .notification-popover {
+  background: #1f1f1f;
+  border-color: #454545;
+}
+
+html[data-theme="dark"] .notification-item {
+  background: #262626;
+  border-color: #454545;
+  color: #e5e5e5;
+}
+
+/* Superficies generales */
+html[data-theme="dark"] .panel,
+html[data-theme="dark"] .metric-card,
+html[data-theme="dark"] .inspection-form,
+html[data-theme="dark"] .table-panel,
+html[data-theme="dark"] .database-dialog,
+html[data-theme="dark"] .roll-dialog,
+html[data-theme="dark"] .p4-dialog,
+html[data-theme="dark"] .ft-dialog,
+html[data-theme="dark"] .ft-standards-dialog,
+html[data-theme="dark"] .ft-results-dialog,
+html[data-theme="dark"] .ft-section-card,
+html[data-theme="dark"] .master-options {
+  background: #1c1c1c;
+  border-color: #383838;
+  color: #e5e5e5;
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] .intro-row h1,
+html[data-theme="dark"] .panel-heading h3,
+html[data-theme="dark"] .section-heading h2,
+html[data-theme="dark"] .roll-dialog-title h2,
+html[data-theme="dark"] .metric-card strong {
+  color: #f5f5f5;
+}
+
+html[data-theme="dark"] p,
+html[data-theme="dark"] small,
+html[data-theme="dark"] .panel-heading p,
+html[data-theme="dark"] .section-heading p,
+html[data-theme="dark"] .master-note,
+html[data-theme="dark"] .metric-card > span,
+html[data-theme="dark"] .metric-card small,
+html[data-theme="dark"] .roll-dialog-title p,
+html[data-theme="dark"] .table-note,
+html[data-theme="dark"] .p4-footnote {
+  color: #c2c2c2;
+}
+
+/* Campos y desplegables */
+html[data-theme="dark"] .field input,
+html[data-theme="dark"] .field select,
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+  background: #262626;
+  border-color: #454545;
+  color: #f5f5f5;
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: #8f8f8f;
+}
+
+html[data-theme="dark"] .field input:focus,
+html[data-theme="dark"] .field select:focus,
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] textarea:focus {
+  border-color: #ffd54a;
+  box-shadow: 0 0 0 3px #403711;
+}
+
+html[data-theme="dark"] .master-options button {
+  color: #e5e5e5;
+}
+
+html[data-theme="dark"] .master-options button:hover,
+html[data-theme="dark"] .master-options button.is-active {
+  background: #403711;
+  color: #ffd54a;
+}
+
+/* Tablas */
+html[data-theme="dark"] table,
+html[data-theme="dark"] th,
+html[data-theme="dark"] td {
+  border-color: #383838;
+  color: #e5e5e5;
+}
+
+html[data-theme="dark"] th,
+html[data-theme="dark"] thead {
+  background: #262626;
+  color: #f5f5f5;
+}
+
+html[data-theme="dark"] tbody tr:nth-child(even) td,
+html[data-theme="dark"] tbody tr:nth-child(even) th {
+  background: #222222;
+}
+
+html[data-theme="dark"] tbody tr:hover td {
+  background: #2e2e2e;
+}
+
+/* Botones: se mantiene el amarillo de marca para el primario */
+html[data-theme="dark"] .button.ghost,
+html[data-theme="dark"] .button.secondary {
+  background: #2e2e2e;
+  border-color: #454545;
+  color: #e5e5e5;
+}
+
+html[data-theme="dark"] .button.primary {
+  background: #ffd54a;
+  color: #111111;
+}
+
+html[data-theme="dark"] .button.primary:hover {
+  background: #f2c400;
+}
+
+/* Estados y avisos */
+html[data-theme="dark"] .result-banner,
+html[data-theme="dark"] .fd-verdict,
+html[data-theme="dark"] .p4-standard-note,
+html[data-theme="dark"] .p4-readonly-standard {
+  background: #262626;
+  border-color: #454545;
+  color: #e5e5e5;
+}
+
+html[data-theme="dark"] .fd-block {
+  border-color: #383838;
+}
+
+html[data-theme="dark"] .fd-status,
+html[data-theme="dark"] .p4-status {
+  background: #2e2e2e;
+  color: #e5e5e5;
+}
+
+html[data-theme="dark"] .fd-status.acepta,
+html[data-theme="dark"] .fd-status.ok,
+html[data-theme="dark"] .p4-status.acepta {
+  background: #12362a;
+  color: #6fdca6;
+}
+
+html[data-theme="dark"] .fd-status.rechaza,
+html[data-theme="dark"] .p4-status.rechaza {
+  background: #401a1c;
+  color: #ff9a9d;
+}
+
+html[data-theme="dark"] .fd-status.sin-estandar,
+html[data-theme="dark"] .fd-status.sin-dato,
+html[data-theme="dark"] .fd-status.pendiente,
+html[data-theme="dark"] .p4-status.sin-estandar,
+html[data-theme="dark"] .p4-status.pending {
+  background: #3a300b;
+  color: #ffd54a;
+}
+
+html[data-theme="dark"] .decision.pending,
+html[data-theme="dark"] .p4-calculated {
+  color: #ffd54a;
+}
+
+/* Barras de desplazamiento */
+html[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #141414;
+}
+
+html[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+  border-radius: 8px;
+}
+
+/* Impresión: se conserva el fondo claro */
+@media print {
+  html[data-theme="dark"] body,
+  html[data-theme="dark"] .app-shell {
+    background: #fff;
+    color: #000;
+  }
+}

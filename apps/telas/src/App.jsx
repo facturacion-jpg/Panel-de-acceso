@@ -55,6 +55,7 @@ import { summarizePlanilla } from "./utils/planilla4Puntos.js";
 import "./styles/dashboard.css";
 import "./styles/inspection.css";
 import "./styles/planilla-4puntos.css";
+import "./styles/dark.css";
 
 const blankRolls = () =>
   Array.from({ length: 30 }, (_, i) => ({
@@ -111,6 +112,10 @@ const downloadSavedInspectionPdf = (...args) => import("./services/inspectionExp
 
 export default function App() {
   const user = auth.currentUser;
+  const [theme, setTheme] = useState(() => {
+    try { return localStorage.getItem("crearte:tema") === "dark" ? "dark" : "light"; }
+    catch (_) { return "light"; }
+  });
   const [charts, setCharts] = useState(null);
   const masterRecords = fabricMaster.records;
   const [inspections, setInspections] = useState(loadInspections);
@@ -134,6 +139,11 @@ export default function App() {
   const [saveError, setSaveError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [emailSuccess, setEmailSuccess] = useState("");
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    try { localStorage.setItem("crearte:tema", theme); } catch (_) {}
+  }, [theme]);
 
   useEffect(() => {
     let active = true;
@@ -639,6 +649,8 @@ export default function App() {
 
       <Header
         userEmail={user?.email}
+        theme={theme}
+        onToggleTheme={() => setTheme(theme === "dark" ? "light" : "dark")}
         onHelp={() => setHelpOpen(true)}
         notifications={notifications}
         onOpenRolls={() => setPlanillaOpen(true)}

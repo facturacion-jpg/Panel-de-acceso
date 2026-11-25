@@ -4,12 +4,22 @@ import { Bell, CircleHelp, X } from "lucide-react";
 
 export default function Header({
   userEmail = "",
+  theme = "light",
+  onToggleTheme,
   onHelp,
   notifications = [],
   onOpenRolls,
   onOpenDatabase
 }) {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+
+  const initials = (userEmail || "")
+    .split("@")[0]
+    .split(/[.\-_\s]+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join("") || "US";
 
   return (
     <>
@@ -35,11 +45,27 @@ export default function Header({
         </div>
 
         <div className="header-tools">
-          <a className="back-to-panel" href="/?retornoAplicativo=1" aria-label="Volver al panel de aplicativos">
-            <span aria-hidden="true">←</span>
-            <span className="back-to-panel-label">Volver al panel</span>
-            <span className="back-to-panel-short">Panel</span>
+          <a
+            className="back-to-panel"
+            href="/?retornoAplicativo=1"
+            data-tip="Volver al panel"
+            aria-label="Volver al panel"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5" />
+              <path d="M10 16l-4-4 4-4M6 12h9" />
+            </svg>
           </a>
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={onToggleTheme}
+            title={theme === "dark" ? "Tema claro" : "Tema oscuro"}
+            aria-label={theme === "dark" ? "Activar modo claro" : "Activar modo oscuro"}
+            aria-pressed={theme === "dark"}
+          >
+            <span className="theme-icon" aria-hidden="true">{theme === "dark" ? "☀" : "☾"}</span>
+          </button>
           <button aria-label="Ayuda" onClick={onHelp}>
             <CircleHelp size={18} />
           </button>
@@ -100,8 +126,7 @@ export default function Header({
             )}
           </div>
           <div className="user-menu">
-            {userEmail && <span className="user-email" title={userEmail}>{userEmail}</span>}
-            <div className="avatar" title={userEmail || undefined} aria-label={userEmail ? `Usuario: ${userEmail}` : "Usuario"}>QA</div>
+            <div className="avatar" title={userEmail || undefined} aria-label={userEmail ? `Usuario: ${userEmail}` : "Usuario"}>{initials}</div>
           </div>
         </div>
 
