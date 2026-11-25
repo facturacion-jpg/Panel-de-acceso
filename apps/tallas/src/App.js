@@ -25,13 +25,13 @@ function App(){
  name==='globe'?html`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>`:
  name==='check'?html`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>`:
  html`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>`;
- const quien=[html`<label key="por-label" htmlFor="por">Diligenciado por</label>`,html`<input key="por-input" id="por" value=${por} onInput=${x=>setPor(x.target.value)}/> `];
+ const quien=html`<span className="who-field" key="por-field"><label key="por-label" htmlFor="por">Diligenciado por</label><input key="por-input" id="por" value=${por} onInput=${x=>setPor(x.target.value)}/></span>`;
  if(!cloudReady)return html`<main className="panel empty" role="status">Cargando los datos compartidos de Tallas…</main>`;
  return html`<div className=${'app'+(menuOpen?' menu-open':'')}><aside className="side" aria-label="Menú principal"><div className="brand">Estado set de tallas<small>Control de auditorías</small></div>
  ${N.map(([k,t,c,i])=>html`<button key=${k} type="button" className="nav" data-tip=${t} aria-label=${t} aria-current=${v===k?'page':undefined} onClick=${()=>navigate(k)}><span className="nav-icon">${icon(i)}</span><span className="nav-label">${t}</span>${c>0&&html`<span className="cnt">${c}</span>`}</button>`)}
- <div className="who">${quien}</div></aside>
+ <div className="side-user"><span>Sesión</span><b>${user?.email||'—'}</b></div></aside>
  ${menuOpen&&html`<button type="button" className="menu-backdrop" aria-label="Cerrar menú" onClick=${()=>setMenuOpen(false)}></button>`}
- <main><div className="topbar"><button type="button" className="menu-toggle" aria-label=${menuOpen?'Cerrar menú':'Abrir menú'} aria-expanded=${menuOpen} onClick=${()=>setMenuOpen(!menuOpen)}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div className="theme-bar"><a className="back-to-panel" href="/?retornoAplicativo=1" aria-label="Volver al panel de aplicativos"><span aria-hidden="true">←</span><span>Volver al panel</span></a>${themeToggle}</div></div><div className="mwho">${quien}</div>
+ <main><div className="topbar"><button type="button" className="menu-toggle" aria-label=${menuOpen?'Cerrar menú':'Abrir menú'} aria-expanded=${menuOpen} onClick=${()=>setMenuOpen(!menuOpen)}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div className="theme-bar"><a className="back-to-panel" href="/?retornoAplicativo=1" aria-label="Volver al panel de aplicativos"><span aria-hidden="true">←</span><span>Volver al panel</span></a>${quien}${themeToggle}</div></div>
  ${cloudError&&html`<p className="mail-error" role="alert">${cloudError}</p>`}
  ${v==='tablero'&&html`<${Tablero} sets=${sets}/>`}${v==='nuevo'&&html`<${Nuevo} plano=${plano} sets=${sets} add=${add} go=${setV}/>`}
  ${v==='web'&&html`<${Web} sets=${sets} upd=${upd}/>`}${v==='final'&&html`<${Final} sets=${sets} upd=${upd} mail=${setM}/>`}${v==='plano'&&(PlanoView?html`<${PlanoView} plano=${plano} setPlano=${changePlano}/>`:html`<p className="panel empty" role="status">Cargando herramienta de Excel…</p>`)}</main>
